@@ -1,0 +1,47 @@
+.form{
+    background-color: red;
+}
+.logform {
+    width: 65%;
+    height: fit-content;
+margin-top: 10px;
+    color: black;
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bolder;
+    border: 1px solid wheat;
+    border-radius: 10px;
+    box-shadow: 500px;
+  }
+
+  .logform img {
+    width: 99%;
+    height: 353px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .logform:hover {
+    background-color: white;
+  }
+
+  .sec {
+    background-color: #d6dce3;
+    height: 400px;
+    margin-top: 100px;
+  }
+
+  h4,
+  h6 {
+    color: black;
+  }
+
+  .logform input:hover {
+    border: 2px solid black;
+    border-color: black;
+  }
+
+  .logform button:hover {
+    border: 2px solid black;
+    border-color: black;
+  }

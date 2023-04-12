@@ -1,0 +1,13 @@
+.body{
+    background-color: white;
+}
+.contact{
+    color: #738F9B;
+    font-size: 15pt;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-top: 20px;
+    padding-left: 20px;
+}

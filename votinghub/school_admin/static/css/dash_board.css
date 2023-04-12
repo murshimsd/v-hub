@@ -1,0 +1,36 @@
+.head h3{
+    margin-top: 8px;
+    margin-left: 4px;
+    color: slategray;
+}
+.cards{
+    margin-top: 8px;
+    border-radius: 15px;
+    margin-left: -19px;
+    
+}
+.cards .inner{
+    box-shadow: 0px 0px 10px black;
+    gap: 2px;
+    /* margin-left: -10px; */
+}
+.cards .inner:hover{
+    transform: scale(105%);
+    box-shadow: 0px 0px 10px black;
+    border-radius: 10px;
+
+}
+.cards img{
+    height: 60px;
+    width: 90px;
+    margin-top: 10px;
+    opacity: 0.5;
+}
+.cards h1{
+    font-size: 60px;
+}
+.tally h3{
+    margin-top: 8px;
+    margin-left: 4px;
+    color: slategray;
+}

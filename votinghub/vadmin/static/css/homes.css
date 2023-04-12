@@ -1,0 +1,125 @@
+.secure {
+    color: #738F9B;
+    font-size: 15pt;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.lists {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.lists li {
+    font-size: 14pt;
+    line-height: 22pt;
+    text-indent: -25 px;
+    color: #738F9B;
+}
+
+.rqstbtn {
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.contactbtn {
+    border-color: #738f9b;
+    border-width: 1px;
+    border-style: solid;
+    color: #738f9b;
+    min-width: 200px;
+    margin-left: 40px;
+}
+
+.home_image img {
+    height: 370px;
+    width: 550px;
+    /* margin-left: -50px; */
+    margin-top: 20px;
+}
+.second{
+    margin-top: 22px;
+}
+
+.second .works {
+
+    color: #738F9B;
+    font-size: 15pt;
+    margin-bottom: 8px;
+    margin-left: 20px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase
+}
+
+.second .works1 {
+    font-style: italic;
+}
+
+.second ul {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.second li {
+    font-size: 14pt;
+    line-height: 22pt;
+    text-indent: -25 px;
+    color: #738F9B;
+}
+
+.second col {
+    margin-left: -50px;
+}
+
+.third {
+    background-color: #d6dce3;
+    color: black;
+    /* padding-left: 40px; */
+}
+
+.third p {
+    font-style: italic;
+    margin-top: 10px;
+    font-size: large;
+}
+
+.third button {
+
+    font-style: italic;
+    margin-top: 6px;
+    font-size: large;
+    margin-bottom: 4px;
+    margin-left: -70px;
+
+}
+
+.fourth p {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: black;
+    font-family: Central Avenue, Arial, sans-serif;
+    margin-top: 10px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    box-shadow: 0px 0px 10px black;
+}
+
+.fourth h1 {
+    font-family: Central Avenue, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.5em;
+    margin-top: 30px;
+    text-transform: uppercase;
+    box-shadow: 0px 0px 10px black;
+    
+
+}

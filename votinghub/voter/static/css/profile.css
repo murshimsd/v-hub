@@ -1,0 +1,29 @@
+/* body{
+    background-color: #d6dce3;
+
+} */
+.profile_card {
+    margin-left: 300px;
+}
+
+.profile_card img {
+    height: 300px;
+}
+#profile_table{
+    font-size: 30px;
+    font-style: italic;
+    
+}
+.editbtn{
+    margin-left: 197px;
+margin-top: 33px;
+}
+.card:hover {
+transform: scale(105%);
+box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+
+color:  black;
+border: 2px solid #d6dce3;
+border-radius: 5px;
+
+}

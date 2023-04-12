@@ -1,0 +1,101 @@
+{% extends 'school_admin/master.html' %}
+{% load static %}
+{% block title %} dash board {% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/dash_board.css' %}">
+<style>
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container head">
+    <div class="row">
+        <div class="col">
+            <h3>
+                dash board
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="container cards">
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3 text-bg-primary inner" style="width: 14rem;">
+                <div class="card-body">
+                  
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="card-title">0</h1>
+                        </div>
+                        <div class="col">
+                            <img src="{% static 'images/positions.svg' %}" alt="">
+                        </div>
+                    </div>
+                    <h3 class="card-text">No of Positions</h3>
+                    <a href="#" class="btn btn-primary">more info -> </a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-3 text-bg-success inner" style="width: 14rem;">
+                <div class="card-body">
+                  
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="card-title">0</h1>
+                        </div>
+                        <div class="col">
+                            <img src="{% static 'images/candidate.svg' %}" alt="">
+                        </div>
+                    </div>
+                    <h3 class="card-text">No of candidates</h3>
+                    <a href="#" class="btn btn-success">more info -> </a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-3 text-bg-light inner" style="width: 14rem;">
+                <div class="card-body">
+                  
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="card-title">0</h1>
+                        </div>
+                        <div class="col">
+                            <img src="{% static 'images/people.svg' %}" alt="">
+                        </div>
+                    </div>
+                    <h3 class="card-text">Total <br> Voters</h3>
+                    <a href="#" class="btn btn-light">more info -> </a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-3 text-bg-dark inner" style="width: 14rem; height: 14rem;">
+                <div class="card-body">
+                  
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="card-title">0</h1>
+                        </div>
+                        <div class="col">
+                            <img src="{% static 'images/lock.svg' %}" alt="">
+                        </div>
+                    </div>
+                    <h3 class="card-text">Voters <br> voted</h3>
+                    <a href="#" class="btn btn-dark">more info -> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container tally">
+        <div class="row">
+            <div class="col">
+             <h3>
+                votes tally
+             </h3>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

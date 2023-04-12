@@ -1,0 +1,107 @@
+{% extends 'vadmin/master.html' %}
+{% load static %}
+{% block title %}admin home{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/homes.css' %}">
+<style>
+   
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container first">
+    <div class="row">
+        <div class="col-6 mt-3">
+            <div class="col secure">secure online voting</div>
+            <div class="col mt-5">
+                <h2>Choose V-hub - Choose Security</h2>
+            </div>
+            <ul class="lists">
+                <li>
+                    Data rotection and security in line with the highest standards
+                </li>
+                <li>
+                    Legally valid election results with the click of a button
+                </li>
+                <li>
+                    Server locations in the europian union
+                </li>
+
+            </ul>
+            <p>
+                <button type="button" class="btn btn-warning rqstbtn">Request a quote now ></button>
+                <a href="{% url 'common:contacts' %}" class="btn btn-light contactbtn">contact</a>
+            </p>
+        </div>
+        <div class="col-6 home_image">
+            <img src="{% static 'images/home.jpg' %}" alt="">
+        </div>
+    </div>
+
+</div>
+<div class="contaier second">
+
+    <div class="container ">
+
+        <div class="row">
+            <div class="col-6">
+                <h3 class="works">How it works?</h3>
+                <h2 class="works1">your election is only 3 steps away</h2>
+                <ul>
+                    <li>Create and manage ballots easily</li>
+                    <li>Provide authentication for eligible voters</li>
+                    <li>Start and view turnout in real time</li>
+                </ul>
+            </div>
+            <div class="col-6 secondcol">
+                <h3 class="works">benefits</h3>
+                <h2 class="works1">Maintain ballot secrecy with secure and efficient online voting</h2>
+                <ul>
+                    <li>Entire studesnts data's security </li>
+                    <li>Receive legally valid results </li>
+                    <li>Increase voter turnout with easy vote submission and digital voter communication</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="third">
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+                <p>Tutorials, instructions and our V-HUB community: They all help you to set up your online election</p>
+            </div>
+            <div class="col-3"><button type="button" class="btn btn-warning "> More about us</button></div>
+        </div>
+    </div>
+
+</div>
+<div class="fourth">
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="row">
+                <div class="col">
+                    <!-- <img src="{% static 'images/fourth.webp' %}" alt=""> -->
+                    <h1>
+                        Take the pledge<br />
+                        <span>Today!</span>
+                    </h1>
+                </div>
+            </div>
+            <div class="col">
+                <p>Ensure you have the latest information on the upcoming<br /> election while helping your school climb
+                    the rankings of<br /> the most-engaged student population.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

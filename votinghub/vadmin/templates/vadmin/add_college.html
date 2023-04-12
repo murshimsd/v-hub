@@ -1,0 +1,77 @@
+{% extends 'vadmin/master.html' %}
+{% load static %}
+{% block title %}add_college{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/add_college.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container forms mt-5">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="form-header text-center mt-3 headers">Registration form</div>
+  <hr/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form class="row g-3 form">
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">College name</label>
+          <input type="text" class="form-control" value="" id="college_name1" placeholder="enter college name" required >
+          <span id="s_college"></span>
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">User name</label>
+          <input type="text" class="form-control" id="user_name" value="" placeholder="enter user name">
+          <span id="valid_username"></span>
+        </div>
+        <div class="col-8">
+          <label for="inputAddress" class="form-label">E-mail_address</label>
+          <input type="email" class="form-control" id="emails" placeholder="official mail address" value="" required>
+          <span id="s_emails"></span>
+        </div>
+        <!-- <div class="col-4">
+          <label for="inputAddress2" class="form-label">password</label>
+          <input type="text" class="form-control" id="password1" placeholder="password" value="">
+          <span id="valid_password1"></span>
+        </div> -->
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="city" value="" placeholder="city" required>
+          <span id="s_city"></span>
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select  class="form-select" id="state1">
+            <option disabled value="" selected>Choose...</option>
+            <option value="kerala">kerala</option>
+            <option value="karnataka">karnataka</option>
+            <option value="tamil-nadu">tamil-nadu</option>
+          </select>
+          <span id="state2"></span>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+        <div class="col-12">
+          
+        </div>
+        <div class="col-12 mb-3">
+          <button type="submit" class="btn submit" onclick="return form_validation()">Sign in</button>
+          <a class="btn close" role="button" href="{% url 'vadmin:home' %}">close</a>
+        </div>
+
+      </form> 
+    </div>
+    
+  </div>
+  
+</div>
+
+    
+
+<script src="{% static 'js/add_college.js' %}"></script>
+{% endblock %}
