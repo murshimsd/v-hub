@@ -1,0 +1,90 @@
+{% extends 'school_admin/master.html' %}
+{% load static %}
+{% block title %} votes {% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/votes.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container title">
+    <div class="row">
+        <div class="col">
+            <h3>Votes</h3>
+        </div>
+    </div>
+</div>
+<div class="container list">
+    <div class="row">
+        <div class="col">
+            <div class="container text-center">
+
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn reset_btn mt-3" data-bs-dismiss="modal"><i
+                                class="fa fa-refresh"></i> reset</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container ">
+                <div class="row mt-3">
+                    <div class="col ms-1">
+                        show entries
+                    </div>
+                    <div class="col">
+                        <form class="example search " action="action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12  mt-3 ms-3">
+                        <table class="table-primary data_table">
+                            <tr>
+                                <th>position</th>
+                                <th>candidate</th>
+                                <th>voter</th>
+                            </tr>
+                            <tr>
+                                <td>chairman</td>
+                                <td>babu</td>
+                                <td>murshi</td>
+                            </tr>
+                            <tr>
+                                <td>vice chairman</td>
+                                <td>ramu</td>
+                                <td>murshi</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container ">
+                <div class="row mb-3">
+                    <div class="col-6 mt-3">
+                    
+                        showing 1 to 2 of2 entries
+                    
+                    </div>
+                    <div class="col-6">
+                        <div class="next_prev ">
+                            <div>
+                                <a href="#">&#8592; Previous</a>
+                                <a href="#">Next &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

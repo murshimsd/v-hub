@@ -50,26 +50,26 @@
           <center>
             <img src="{% static 'images/men.webp' %}" alt="">
             <br>
-            <h3>murshid p</h3>
+            <h4>murshid p</h4>
 
           </center>
           <br>
-          <h5>repots</h5>
-          <a href="#"><img src="{% static 'images/dashboard.svg' %}" alt="" class="icon_image"><span>Dash
+          <h5>reports</h5>
+          <a href="{% url 'school_admin:home' %}"><img src="{% static 'images/dashboard.svg' %}" alt="" class="icon_image"><span>Dash
               board</span></a>
-          <a href="#"><img src="{% static 'images/lock.svg' %}" alt="" class="icon_image"><span>Votes</span></a>
+          <a href="{% url 'school_admin:votes' %}"><img src="{% static 'images/lock.svg' %}" alt="" class="icon_image"><span>Votes</span></a>
           <br>
           <h5>manage</h5>
-          <a href="#"><img src="{% static 'images/people.svg' %}" alt="" class="icon_image"><span>voters</span></a>
-          <a href="#"><img src="{% static 'images/positions.svg' %}" alt=""
+          <a href="{% url 'school_admin:voters' %}"><img src="{% static 'images/people.svg' %}" alt="" class="icon_image"><span>voters</span></a>
+          <a href="{% url 'school_admin:positions' %}"><img src="{% static 'images/positions.svg' %}" alt=""
               class="icon_image"><span>positions</span></a>
-          <a href="#"><img src="{% static 'images/candidate.svg' %}" alt=""
+          <a href="{% url 'school_admin:candidates' %}"><img src="{% static 'images/candidate.svg' %}" alt=""
               class="icon_image"><span>candidates</span></a>
           <br>
           <h5>setting</h5>
-          <a href="#"><img src="{% static 'images/ballot.svg' %}" alt="" class="icon_image"><span>ballot
+          <a href="{% url 'school_admin:ballot_position' %}"><img src="{% static 'images/ballot.svg' %}" alt="" class="icon_image"><span>ballot
               position</span></a>
-          <a href="#"><img src="{% static 'images/title.svg' %}" alt="" class="icon_image"><span>election
+          <a href="{% url 'school_admin:title' %}"><img src="{% static 'images/title.svg' %}" alt="" class="icon_image"><span>election
               title</span></a>
 
         </div>

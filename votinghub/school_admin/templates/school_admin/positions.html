@@ -1,0 +1,179 @@
+{% extends 'school_admin/master.html' %}
+{% load static %}
+{% block title %} positions {% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/position.css' %}">
+<style>
+    .image {
+        height: 60px;
+        width: 60px;
+        /* margin-top: 10px; */
+        opacity: 0.5;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container title">
+    <div class="row">
+        <div class="col">
+            <h3>Positions</h3>
+        </div>
+    </div>
+</div>
+<div class="container list">
+    <div class="row">
+        <div class="col">
+            <div class="container ">
+                <div class="row mt-3">
+                    <div class="col add_button">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn  modal_btn btn-square" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            <i class="fa fa-plus"></i> new
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content modals">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Positions</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="">
+                                            <table id="modal_table" border="0">
+                                                <tr>
+                                                    <td>
+                                                        <label for="">Title &nbsp; &nbsp; </label>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select" style="border-radius: 0px;">
+                                                            <option selected disabled>Election-Title</option>
+                                                            <option value="1">2022 calicut univecity election</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                        </select>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label for="">Position&nbsp; &nbsp; </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" value="" size="40">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label for="">No : Of Votes &nbsp; &nbsp; </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" value="" size="40">
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
+                                                class="fa fa-close"></i> Close</button>
+                                        <button type="button" class="btn modal_save"><i
+                                                class="fa fa-save"></i>save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img src="{% static 'images/positions.svg' %}" alt="" id="logo" style="margin-left: 269px;">
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 float-sm-start float-md-start">
+                        show entries
+                    </div>
+                    <div class="col-6">
+                        <form class="example search " action="action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container text-center">
+                <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+                <div class="row">
+                    <div class="col-md-12 mt-5">
+                        <table class="table-primary data_table" border="1">
+                            <tr>
+                                <th>No</th>
+                                <th>Description</th>
+                                <th>Maximum-Vote</th>
+                                <th>Tools</th>
+                            </tr>
+                            <!-- <tr>
+                                <td>1</td>
+                                <td>Chairman</td>
+                                <td> 30</td>
+
+                                <td>
+                                    <button type="button" class="btn table_edit" data-bs-dismiss="modal"><i
+                                            class="fa fa-edit"></i>edit</button>
+                                    <span>
+                                        <button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
+                                                class="fa fa-trash"></i> delet</button>
+                                    </span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Vice Chairman</td>
+                                <td> 30</td>
+
+                                <td>
+                                    <button type="button" class="btn table_edit" data-bs-dismiss="modal"><i
+                                            class="fa fa-edit"></i>edit</button>
+                                    <span>
+                                        <button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
+                                                class="fa fa-trash"></i> delet</button>
+                                    </span>
+                                </td>
+
+                            </tr> -->
+                            <tr>
+                                <td colspan="4">
+                                    no data available
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="container text-center">
+
+                <div class="col-12">
+                    <div class="next_prev mb-3">
+                        <div>
+                            <a href="#">&#8592; Previous</a>
+                            <a href="#">Next &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

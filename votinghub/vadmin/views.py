@@ -14,5 +14,5 @@ def add_college(request):
 def view_college(request):
     return render(request,'vadmin/view_college.html')
 
-def master1(request):
-    return render(request,'vadmin/master1.html')
+
+

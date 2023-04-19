@@ -1,36 +1,33 @@
-{% extends 'voter/master.html' %}
+{% extends 'school_admin/master.html' %}
 {% load static %}
-{% block title %}voter{% endblock %}
-
+{% block title %} Ballotposition {% endblock %}
 {% block header %}
-<link rel="stylesheet" href="{% static 'css/vote.css' %}">
-<style>
- 
-
-</style>
+<link rel="stylesheet" href="{% static 'css/ballot_position.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container mb-3">
-    <div class="row election">
-        <div class="col"><h1>calicut university election - 2022</h1></div>
+<div class="container title">
+    <div class="row">
+        <div class="col">
+            <h3>Ballot Position</h3>
+        </div>
     </div>
 </div>
-
-<div class="container vote">
-    <div class="row ">
-       
-        <div class="col bg-light ">
-
+<div class="container">
+    <div class="row">
+        <div class="col bg-light">
             <form action="">
 
-                <ul class="list-group vote_form">
+                <ul class="list-group ballot_form">
                     <li class="list-group  position">
                         <div class="row">
                             <div class="col-10 mt-3 mb-3">
                                 <h2>chairman</h2>
                             </div>
-                            <div class="col-2"><input class="btn  reset mb-3 mt-3 resets" type="reset" value="Reset" ></div>
+                            <div class="col-2">
+                                <button type="reset" class="btn resets mt-3" data-bs-dismiss="modal"><i
+                                    class="fa fa-refresh"></i> reset</button>
+                            </div>
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -208,24 +205,25 @@
                     
                 </ul>
             </form>
-
         </div>
     </div>
-    <br>
-
-    <div class="row ">
-       
-        <div class="col bg-light ">
-
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col bg-light">
             <form action="">
 
-                <ul class="list-group vote_form">
-                    <li class="list-group position">
+                <ul class="list-group ballot_form">
+                    <li class="list-group  position">
                         <div class="row">
                             <div class="col-10 mt-3 mb-3">
-                                <h2>Secratory</h2>
+                                <h2>Vice-chairman</h2>
                             </div>
-                            <div class="col-2"><input class="btn  reset mb-3 mt-3 resets" type="reset" value="Reset"></div>
+                            <div class="col-2">
+                                <button type="reset" class="btn resets mt-3" data-bs-dismiss="modal"><i
+                                    class="fa fa-refresh"></i> reset</button>
+                            </div>
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -342,217 +340,13 @@
                         </div>
 
                     </li>
-                    <li class="list-group-item">
-                        <div class="container text-center">
-                            <div class="row">
-                                <div class="col-2">
-                                    <input class="form-check-input me-1 radios" type="radio" name="listGroupRadio"
-                                        value="" >
-                                    <label class="form-check-label" for="firstRadio">
-                                        <!-- Button trigger modal -->
-
-                                    </label>
-                                </div>
-                                <div class="col-2">
-                                    <button type="button" class="btn platform" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                        </svg>
-                                        platform
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">hello friends
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    vbnnmnm
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <img src="{% static 'images/men.webp' %}" alt="" class="image">
-                                </div>
-                                <div class="col-5">
-                                    <h3>
-                                        arun p
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-
-                    </li>
-                    
-                    <div class="div submit text-center mb-3 mt-3">
-                        <button type="button" class="btn btn-info view">view ballot</button>
-                        <button type="button" class="btn btn-success">Success</button>
-                
-                    </div>
+                   
 
                     
                 </ul>
             </form>
-
         </div>
     </div>
-   
 </div>
 
-
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="{% static 'css/vote.css' %}">
-
-    <style>
-        /* * {
-            font-family: 'Rubik', sans-serif;
-        }
-
-        .listposition {
-            color: black;
-            border: 2px solid white;
-
-        }
-
-        .main {
-            background-color: #aab3be;
-            height: 450px;
-        }
-
-    
-        table img{
-            height: 90px;
-            width: 130px;
-            border-radius: 10px;
-        }
-        button:hover{
-            border: 2px solid black;
-            border-color: black;
-        }
-        .vote button:hover{
-            border: 2px solid black;
-            border-color: black; 
-        } */
-       
-        
-    </style>
-</head>
-
-<body>
-    <div class="main">
-        <div class="row ">
-            <div class="col-3  listposition rounded">
-                <div class="list-group rounded mb-5 mt-3 ms-3 list border-dark-subtle">
-                    <button type="button"
-                        class="list-group-item list-group-item-action text-dark-emphasi text-center fs-5 bg-light fw-bolder"
-                        disabled>
-                        <img src="{% static 'images/positionlogo.png' %}" alt="" style="height: 30px; width: 30px;">
-                        choose positions
-                    </button>
-                    <button type="button"
-                        class="list-group-item list-group-item-action text-dark-emphasi bg-light fw-semibold"
-                        aria-current="true">
-                        chairman
-                    </button>
-                    <button type="button"
-                        class="list-group-item list-group-item-action text-dark-emphasi bg-light fw-semibold">secratory</button>
-                    <button type="button"
-                        class="list-group-item list-group-item-action text-dark-emphasi bg-light fw-semibold">vice
-                        chairman</button>
-                    <button type="button"
-                        class="list-group-item list-group-item-action text-dark-emphasis bg-light fw-semibold ">join
-                        secratory</button>
-
-                </div>
-            </div>
-            <div class="col-9 rounded  text-center bg-light vote">
-
-               <table cborder="1" cellspacing="1" style="background-color: #aab3be; border-radius: 15px;margin-left: 30px; margin-top: 10px; width: 70%;  ">
-                <tr>
-                <th style="height: 100px; width: 150px;">photo</th>
-                <th style="height: 100px; width: 200px;">name</th>
-                <th style="height: 100px; width: 100px;">symbol</th>
-                <th style="height: 100px; width: 100px;">active</th>
-                </tr>
-                <tr>
-                    <th><img src="{% static 'images/men.webp' %}" alt=""></th>
-                    <th>murshid</th>
-                    <th><img src="{% static 'images/hand.png' %}" alt="" style="height: 69px; width: 80px;"></th>
-                    <th><button type="button" class="btn btn-success ">vote</button></th>
-                </tr>
-                <tr>
-                    <th><img src="{% static 'images/men.webp' %}" alt=""></th>
-                    <th>murshid</th>
-                    <th><img src="{% static 'images/hand.png' %}" alt="" style="height: 69px; width: 80px;"></th>
-                    <th><button type="button" class="btn btn-success">vote</button></th>
-                </tr>
-                <tr>
-                    <th><img src="{% static 'images/men.webp' %}" alt=""></th>
-                    <th>murshid</th>
-                    <th><img src="{% static 'images/hand.png' %}" alt="" style="height: 69px; width: 80px;"></th>
-                    <th><button type="button" class="btn btn-success">vote</button></th>
-                </tr>
-
-               </table>
-               <button type="button" class="btn btn-success mt-3" style="width: 170px;height: 50px;">submit</button>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html> -->

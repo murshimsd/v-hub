@@ -12,12 +12,15 @@
 .cards .inner{
     box-shadow: 0px 0px 10px black;
     gap: 2px;
-    /* margin-left: -10px; */
+    height: 210px;
+    border-radius: 0;
+    
 }
 .cards .inner:hover{
     transform: scale(105%);
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 4px 10px black;
     border-radius: 10px;
+    
 
 }
 .cards img{

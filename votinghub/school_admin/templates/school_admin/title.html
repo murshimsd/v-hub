@@ -1,0 +1,28 @@
+{% extends 'school_admin/master.html' %}
+{% load static %}
+{% block title %} title {% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/title.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container titles">
+    <div class="row">
+        <div class="col">
+            <h3>Election-title</h3>
+        </div>
+    </div>
+</div>
+<div class="container title">
+    <div class="row">
+        <div class="col">
+            <table class="election_title">
+<tr>
+    <th>
+        <h1>2022 calicut university election</h1>
+    </th>
+</tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
