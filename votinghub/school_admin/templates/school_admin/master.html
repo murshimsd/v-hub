@@ -12,6 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet" href="{% static 'css/master_page.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
@@ -56,21 +58,19 @@
           </center>
           <br>
           <h5>reports</h5>
-          <a href="{% url 'school_admin:home' %}"><img src="{% static 'images/dashboard.svg' %}" alt="" class="icon_image"><span>Dash
+          <a href="{% url 'school_admin:home' %}"><i class="las la-igloo icons"></i><span>Dash
               board</span></a>
-          <a href="{% url 'school_admin:votes' %}"><img src="{% static 'images/lock.svg' %}" alt="" class="icon_image"><span>Votes</span></a>
+          <a href="{% url 'school_admin:votes' %}"><i class="las la-vote-yea icons"></i><span>Votes</span></a>
           <br>
           <h5>manage</h5>
-          <a href="{% url 'school_admin:voters' %}"><img src="{% static 'images/people.svg' %}" alt="" class="icon_image"><span>voters</span></a>
-          <a href="{% url 'school_admin:positions' %}"><img src="{% static 'images/positions.svg' %}" alt=""
-              class="icon_image"><span>positions</span></a>
-          <a href="{% url 'school_admin:candidates' %}"><img src="{% static 'images/candidate.svg' %}" alt=""
-              class="icon_image"><span>candidates</span></a>
+          <a href="{% url 'school_admin:voters' %}"><i class="las la-users icons"></i><span>voters</span></a>
+          <a href="{% url 'school_admin:positions' %}"><i class="lar la-address-card icons"></i><span>positions</span></a>
+          <a href="{% url 'school_admin:candidates' %}"><i class="lab la-redhat icons"></i><span>candidates</span></a>
           <br>
           <h5>setting</h5>
-          <a href="{% url 'school_admin:ballot_position' %}"><img src="{% static 'images/ballot.svg' %}" alt="" class="icon_image"><span>ballot
+          <a href="{% url 'school_admin:ballot_position' %}"><i class="las la-box icons"></i><span>ballot
               position</span></a>
-          <a href="{% url 'school_admin:title' %}"><img src="{% static 'images/title.svg' %}" alt="" class="icon_image"><span>election
+          <a href="{% url 'school_admin:title' %}"><i class="las la-person-booth icons"></i><span>election
               title</span></a>
 
         </div>

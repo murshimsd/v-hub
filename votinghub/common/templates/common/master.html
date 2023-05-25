@@ -14,7 +14,18 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/master.css' %}">
   <style>
-
+.footer_img{
+  width: 60px;
+height: 90px;
+padding-top: 30px;
+margin-left: 30px;
+}
+nav b{
+  color: black;
+}
+nav b:hover{
+  color: white;
+}
   </style>
   {% block header %}
 
@@ -24,16 +35,7 @@
 <body style="background-color: #d6dce3;">
 
 
-  <!-- <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid nav ps-5 rounded">
 
-    <img src="{% static 'images/vlogo.png' %}" alt="Logo" width="150px" height="70px"
-      class="d-inline-block align-text-top rounded">
-    <a class="navbar-brand px-5" href="#" style="font-style: italic; font-size: large;">GO BACK</a>
-    
-
-  </div>
-</nav> -->
   <nav class="navbar navbar-expand-lg  header" style=" background-color: #d6dce3;">
     <div class="container-fluid ">
       <a class="navbar-brand ms-5 " href="#"><img src="{% static 'images/vlogo.png' %}" alt=""
@@ -100,9 +102,9 @@
             Karnataka, India</p>
         </div>
         <div class="col-6 col-md-4 ">
-          <img src="{% static 'images/twitter1.png' %}" alt="sacsd">
-          <img src="{% static 'images/instagram.png' %}" alt="asd">
-          <img src="{% static 'images/fb.png' %}" alt="asd">
+          <img src="{% static 'images/twitter1.png' %}" alt="sacsd"class="footer_img">
+          <img src="{% static 'images/instagram.png' %}" alt="asd"class="footer_img">
+          <img src="{% static 'images/fb.png' %}" alt="asd"class="footer_img">
         </div>
       </div>
       <div class="lastfoot">

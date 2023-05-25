@@ -1,24 +1,24 @@
 .lastfoot {
-    background-color: #d6dce3;
-  }
+  background-color: #d6dce3;
+}
 
-  .header {
-    background-color: #d6dce3;
-    border-bottom: 1px solid black;
-    z-index: 999;
-    position: sticky;
-    top: 0;
-    box-shadow: 0px 0px 10px black;
-  }
-  .footer{
-  background-color:  #d6dce3;  
-  border-top: 1px solid black;
-  margin-top: 15px;
-  border-radius: 1px solid black;
+.header {
+  background-color: #d6dce3;
+  border-bottom: 1px solid black;
+  z-index: 999;
+  position: sticky;
+  top: 0;
+  box-shadow: 0px 0px 10px black;
+}
+.footer{
+background-color:  #d6dce3;  
+border-top: 1px solid black;
+margin-top: 15px;
+border-radius: 1px solid black;
 } 
-.footer img{
-  width: 60px;
-  height: 90px;
-  padding-top: 30px;
-  margin-left: 30px;
+.footer_img{
+width: 60px;
+height: 90px;
+padding-top: 30px;
+margin-left: 30px;
 }

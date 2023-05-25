@@ -66,12 +66,13 @@ margin-top:3px ;
   color: slategray;
   margin-top: -10px;
 }
-
-.side_menu .icon_image{
-  margin-left: 20px;
-  height: 15px;
-  width: 15px;
+.side_menu i{
+  height: 45px;
+  margin-left: 10px;
+  
 }
+
+
 @media (max-width:850px){
   .side_menu a span{
       display: none;
@@ -83,10 +84,10 @@ margin-top:3px ;
   .side_menu{
       width: 100px;
   }
-  .side_menu .icon_image{
-      line-height: 80px;
-      margin-left: 20px;
-      width: 30px;
+  .side_menu i{
+      
+      margin-left: 40px;
+      width: 90px;
       height: 30px;
   }
   .side_menu h5{
