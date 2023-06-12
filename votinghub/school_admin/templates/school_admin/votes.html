@@ -3,6 +3,55 @@
 {% block title %} votes {% endblock %}
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/votes.css' %}">
+<style>
+         .data_table {
+    width: 900px;
+    border-spacing: 10px;
+    border: none; 
+    box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2); 
+  }
+  
+  .data_table th,
+  .data_table td {
+    font-family: 'Times New Roman', Times, serif;
+    padding: 10px; 
+  }
+  .data_table td {
+    font-size: 18px;
+  }
+  .data_table th{
+    font-size: 18px;
+  }
+  
+  .table_edit,
+  .table_delet {
+    border: none; 
+    color: white;
+    background-color: gray;
+    border-radius: 0;
+    padding: 5px 10px; 
+  }
+  
+  .table_delet {
+    background-color: #f44336;
+  }
+  
+  .next_prev {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 20px;
+  }
+  
+  .next_prev a {
+    text-decoration: none;
+    color: black;
+    background-color: #008CBA;
+    border-radius: 2px;
+    border: none; 
+    padding: 5px 10px; 
+    font-size: 14px;
+  }
+</style>
 {% endblock %}
 {% block content %}
 <div class="container title">
@@ -88,3 +137,6 @@
 </div>
 
 {% endblock %}
+
+
+

@@ -22,6 +22,7 @@ urlpatterns = [
     path('voter/',include('voter.urls')),
     path('vadmin/',include('vadmin.urls')),
     path('school_admin/',include('school_admin.urls')),
+    path('candidate/',include('candidate.urls')),
 
 ]
 

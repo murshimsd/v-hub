@@ -14,13 +14,15 @@
     <div class="row">
       <div class="col-md-6 sm-12"><img src="{% static 'images/giphy.gif' %}" alt="" class="rounded"></div>
       <div class="col-md-6 sm-12">
-        <form>
+        <form method="POST">
+          {% csrf_token %}
+          {{ msg }}
           <div class="form-group mt-5">
             <label for="exampleInputEmail1">
-              <h4>User id</h4>
+              <h4>Email</h4>
             </label>
-            <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder="User id" required>
+            <input type="email" class="form-control"  aria-describedby="emailHelp"
+              placeholder="email" name="email" required>
             <!-- <small id="emailHelp" class="form-text text-dark">We'll never share your email with anyone else.</small> -->
           </div>
           <br />
@@ -28,18 +30,12 @@
             <label for="exampleInputPassword1">
               <h4>password</h4>
             </label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" required>
           </div>
           <br />
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">
-              <h6>Check me out</h6>
-            </label>
-          </div>
-          <br />
-          <a href="{% url 'voter:vote' %}">
-            <button type="submit" class="btn btn-success">login</button></a>
+         
+                    
+            <button type="submit" class="btn btn-success">login</button>
           <br />
           <div class="d-grid gap-2">
             <h5 class="ps-3 fw-semibold">want login as a canidate ?

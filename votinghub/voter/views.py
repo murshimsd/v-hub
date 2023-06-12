@@ -13,3 +13,6 @@ def profile(request):
 
 def view_vote(request):
     return render(request,'voter/view_vote.html')
+
+def update_profile(request):
+    return render(request,'voter/update_profile.html')

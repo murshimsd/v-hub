@@ -12,6 +12,7 @@ urlpatterns = [
     path('title',views.title,name='title'),
     path('candidates',views.candidates,name='candidates'),
     path('ballot_position',views.ballot_position,name='ballot_position'),
-    path('votes',views.votes,name='votes')
+    path('votes',views.votes,name='votes'),
+    path('remove_voter/<int:vid>',views.remove_voter,name='remove_voter')
 
 ]

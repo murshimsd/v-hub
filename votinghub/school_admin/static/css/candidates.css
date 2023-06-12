@@ -1,4 +1,4 @@
-.title h3{
+/* .title h3{
     margin-top: 18px;
     margin-left: 4px;
     color: slategray;
@@ -76,5 +76,46 @@ border-radius: 0px;
     background-color: #008CBA;
     border-radius: 2px;
     border: 1px solid black;  
+    font-size: 14px;
+  } */
+  .data_table {
+    width: 900px;
+    border-spacing: 10px;
+    border: none; /* Remove border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add box shadow */
+  }
+  
+  .data_table th,
+  .data_table td {
+    font-family: 'Times New Roman', Times, serif;
+    padding: 10px; /* Add padding for better spacing */
+  }
+  
+  .table_edit,
+  .table_delet {
+    border: none; /* Remove border */
+    color: white;
+    background-color: gray;
+    border-radius: 0;
+    padding: 5px 10px; /* Adjust padding for better button size */
+  }
+  
+  .table_delet {
+    background-color: #f44336;
+  }
+  
+  .next_prev {
+    display: flex;
+    justify-content: flex-end; /* Adjust alignment */
+    margin-top: 20px;
+  }
+  
+  .next_prev a {
+    text-decoration: none;
+    color: black;
+    background-color: #008CBA;
+    border-radius: 2px;
+    border: none; /* Remove border */
+    padding: 5px 10px; /* Adjust padding for better button size */
     font-size: 14px;
   }

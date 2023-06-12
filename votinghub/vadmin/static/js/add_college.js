@@ -75,7 +75,6 @@ else {
     valid_city.style.display = "none"
 }
 if (state1.value == "") {
-    console.log("ggg")
     valid_status = 0
     state2.innerHTML = "enter your-city"
     state2.style.color = "red"

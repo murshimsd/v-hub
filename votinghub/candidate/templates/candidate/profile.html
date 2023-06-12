@@ -1,0 +1,86 @@
+{% extends 'candidate/master_pages.html' %}
+{% load static %}
+{% block title %} candidate profile{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<style>
+.profile-card {
+ margin-top: 20px;
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(2, 2, 2, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.profile-image {
+  flex: 0 0 120px;
+  margin-right: 20px;
+}
+
+.profile-image img {
+    
+  width: 120px;
+  height: 205px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  
+}
+
+.profile-details {
+  flex: 1;
+}
+
+.profile-details h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.profile-details p {
+  margin-bottom: 5px;
+  color: #666666;
+  font-size: 16px;
+}
+
+.edit-button {
+  background-color: rgb(18, 18, 115);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.edit-button:hover {
+  background-color: #d6dce3;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-card" style="margin-top: 10px;">
+    <div class="profile-image">
+      <img src="{% static 'images/prof.jpg' %}" alt="Profile Image">
+    </div>
+    <div class="profile-details">
+      <h2>Name</h2>
+      <p>Email: example@example.com</p>
+      <p>Election: university Election</p>
+      <p>position: 123, Chairman</p>
+      
+      <button class="edit-button">Edit</button>
+    </div>
+  </div>
+{% endblock %}

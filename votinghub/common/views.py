@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
+from voter.models import Voter
 
 # Create your views here.
 
@@ -6,10 +7,34 @@ def vote(request):
     return render(request,'common/vote.html')
  
 def admin_login(request):
-    return render(request,'common/admin_login.html')    
+    return render(request,'common/admin_login.html')  
+
+
+
 
 def voter_login(request):
-    return render(request,'common/voter_login.html')   
+    msgs = ''
+
+    if request.method == 'POST':
+
+        v_email = request.POST['email']
+        passwords = request.POST['password']
+
+        try:
+            voter = Voter.objects.get(e_mail = v_email , password = passwords )
+            request.session['voter'] = voter.id
+            request.session['voter_name'] = voter.f_name
+            request.session['voter_photo'] = voter.photo.url
+            return redirect('voter:vote')
+
+        except :
+            msgs = 'incorrect mail or password'
+
+
+    return render(request,'common/voter_login.html',{"msg":msgs})   
+
+
+
 
 def voter_register(request):
     return render(request,'common/voter_register.html')   
