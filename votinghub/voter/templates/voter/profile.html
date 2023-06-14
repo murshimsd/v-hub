@@ -72,15 +72,14 @@
 {% block content %}
 <div class="profile-card" style="margin-top: 10px;">
     <div class="profile-image">
-      <img src="{% static 'images/prof.jpg' %}" alt="Profile Image">
+      <img src="{{ voter.photo.url }}" alt="Profile Image">
     </div>
     <div class="profile-details">
-      <h2>Name</h2>
-      <p>Email: example@example.com</p>
-      <p>Phone: +1 234 5678</p>
-      <p>Address: 123, Street, City</p>
-      <p>Course: Example Course</p>
-      <button class="edit-button">Edit</button>
+      <br>
+      <h1>{{ voter.f_name }}<span> </span>{{ voter.l_name }}</h1>
+      <h2>{{ voter.e_mail }}</h2>
+      
+     <a href="{% url 'voter:update_profile' %}"><button class="edit-button">Edit</button></a> 
     </div>
   </div>
 {% endblock %}

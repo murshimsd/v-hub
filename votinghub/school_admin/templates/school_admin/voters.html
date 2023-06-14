@@ -3,6 +3,7 @@
 {% block title %} voters {% endblock %}
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/voters.css' %}">
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <style>
     .image {
         height: 60px;
@@ -60,86 +61,109 @@
         padding: 5px 10px;
         font-size: 14px;
     }
-    .title h3{
-    margin-top: 18px;
-    margin-left: 4px;
-    color: slategray;
-}
-#logo{
-    height: 60px;
-    width: 60px;
-    float: inline-end;
-    opacity: 0.5;
-}
-.list{
-    background-color:  #d6dce3;
-    box-shadow: 0px 0px 10px black; 
-}
-.modal_btn{
-    background-color: #4CAF50;;
-    color: white;
-    border: 1px solid black;
-    border-radius: 0;
-}
-.modals{
-    border-radius: 0px;
-    font-family: Central Avenue, Arial, sans-serif;
-  }
-.modal_btn:hover{
-    border-color: #04AA6D;
-    color: green;
-  }
 
-  .modals button{
-border-radius: 0px;
-  }
-  .modal_close{
-    border: 1px solid black;
-    background-color: #f44336;
-    color: white;
-  }
-  .modal_save{
-    border: 1px solid black;
-    color: white;
-    background-color: #008CBA;
-  }
-  .search{
-    margin-left: 149px;
-  }
-  .data_table{
-    width: 900px;
-    border-spacing: 10px;
-    border: 2px solid white;
-  }
-  .data_table td{
-    font-family: 'Times New Roman', Times, serif ;
-  }
-  .table_edit{
-    border: 1px solid black;
-    color: white;
-    background-color: gray;
-    border-radius: 0px;
-  }
-  .table_delet{
-    border: 1px solid black;
-    background-color: #f44336;
-    color: white;
-    border-radius: 0px;
-  }
-  .next_prev{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    float: right;
-  }
-  .next_prev a{
-    text-decoration: none;
-    color: black;
-    background-color: #008CBA;
-    border-radius: 2px;
-    border: 1px solid black;  
-    font-size: 14px;
-  }
+    .title h3 {
+        margin-top: 18px;
+        margin-left: 4px;
+        color: slategray;
+    }
+
+    #logo {
+        height: 60px;
+        width: 60px;
+        float: inline-end;
+        opacity: 0.5;
+    }
+
+    .list {
+        background-color: #d6dce3;
+        box-shadow: 0px 0px 10px black;
+    }
+
+    .modal_btn {
+        background-color: #4CAF50;
+        ;
+        color: white;
+        border: 1px solid black;
+        border-radius: 0;
+    }
+
+    .modals {
+        border-radius: 0px;
+        font-family: Central Avenue, Arial, sans-serif;
+    }
+
+    .modal_btn:hover {
+        border-color: #04AA6D;
+        color: green;
+    }
+
+    .modals button {
+        border-radius: 0px;
+    }
+
+    .modal_close {
+        border: 1px solid black;
+        background-color: #f44336;
+        color: white;
+    }
+
+    .modal_save {
+        border: 1px solid black;
+        color: white;
+        background-color: #008CBA;
+    }
+
+    .search {
+        margin-left: 149px;
+    }
+
+    .data_table {
+        width: 900px;
+        border-spacing: 10px;
+        border: 2px solid white;
+    }
+
+    .data_table td {
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .table_edit {
+        border: 1px solid black;
+        color: white;
+        background-color: gray;
+        border-radius: 0px;
+    }
+
+    .table_delet {
+        border: 1px solid black;
+        background-color: #f44336;
+        color: white;
+        border-radius: 0px;
+    }
+
+    .next_prev {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        float: right;
+    }
+
+    .next_prev a {
+        text-decoration: none;
+        color: black;
+        background-color: #008CBA;
+        border-radius: 2px;
+        border: 1px solid black;
+        font-size: 14px;
+    }
+
+    .mbody {
+        box-sizing: border-box;
+        background-color: #d6dce3;
+        border: 3px solid white;
+        border-bottom: 0px;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -199,10 +223,14 @@ border-radius: 0px;
                                                             <label for="">Email &nbsp; &nbsp; </label>
                                                         </td>
                                                         <td>
-                                                            <input type="email" value="" size="40" name="emails">
+                                                            <input type="email" value="" size="40" name="emails" id="email">
                                                         </td>
                                                     </tr>
-                                                 
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><span id="span_mail"></span></td>
+                                                    </tr>
+
                                                     <tr class="mt-3">
 
                                                         <td>
@@ -213,8 +241,9 @@ border-radius: 0px;
                                                                 <input type="file" class="form-control load_image"
                                                                     id="inputGroupFile04"
                                                                     aria-describedby="inputGroupFileAddon04"
-                                                                    aria-label="Upload" style="width: 20px;" name="photo">
-                                                                
+                                                                    aria-label="Upload" style="width: 20px;"
+                                                                    name="photo">
+
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -234,7 +263,7 @@ border-radius: 0px;
                             </div>
                     </div>
                 </div>
-            </form>
+                </form>
                 <div class="col">
                     <img src="{% static 'images/people.svg' %}" alt="" id="logo" style="margin-left: 269px;">
                 </div>
@@ -276,37 +305,64 @@ border-radius: 0px;
                             <td><img src="{{ voter.photo.url }}" alt="" style="height: 40px;width: 40px;"></td>
                             <td>{{ voter.password }}</td>
                             <td>
-                                <button type="button" class="btn table_edit" data-bs-dismiss="modal"><i
-                                        class="fa fa-edit"></i>edit</button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-secondary"
+                                    style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal2"><i class="fa fa-edit"></i>
+                                    edit
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal2" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content mbody">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                                    style="margin-left: 15px;">update password</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table>
+                                                    
+                                                    <tr>
+                                                        <td><label for="">Name : </label></td>
+                                                        <td><span name="namess">{{ voter.f_name }}</span><br></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label for="">Password : </label>
+                                                        </td>
+                                                        <td><input type="text" name="passwrds" value="password"></td>
+                                                    </tr>
+                                                </table>
+
+
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <span>
-                                    <a href="{% url 'school_admin:remove_voter' voter.id %}"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
-                                            class="fa fa-trash"></i> delet</button></a>
+                                    <a href="{% url 'school_admin:remove_voter' voter.id %}"><button type="button"
+                                            class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>
+                                            delet</button></a>
                                 </span>
                             </td>
 
                         </tr>
                         {% endfor %}
-                       
+
                     </table>
                 </div>
             </div>
-            <div id="editModal" class="modal">
-                <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <h2>Edit Form</h2>
-                  <form>
-                    <!-- Add your form fields here -->
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name">
-                    
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email">
-                    
-                    <input type="submit" value="Save Changes">
-                  </form>
-                </div>
-              </div>
-
 
         </div>
         <div class="container ">
@@ -332,5 +388,45 @@ border-radius: 0px;
     </div>
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="{% static 'js/voters.js' %}"></script>
+<script>
+    $("#email").keyup(function(){
+        $.ajaxSetup({
+                headers: {
+
+                    "X-CSRFToken": '{{ csrf_token }}'
+
+                }
+            })
+
+            $.ajax({
+
+                url : "{% url 'school_admin:check_mail' %}",
+                method : 'POST',
+                data : {
+                    "voterEmail" : $(this).val()
+
+                },
+                success : function(response){
+                    let exist = response.email_exist
+                    if (exist == true){
+
+                        $("#span_mail").html('email already exist').css({"color":"red"})
+
+                    }
+                  
+                }
+
+
+
+            })
+    })
+
+
+
+
+    
+</script>
 
 {% endblock %}

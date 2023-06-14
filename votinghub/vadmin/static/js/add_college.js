@@ -3,8 +3,6 @@ function form_validation(){
 var valid_college_name = document.getElementById("s_college")
 var email_address = document.getElementById("emails")
 var valid_email_address = document.getElementById("s_emails")
-// var password = document.getElementById("password1")
-// var valid_password = document.getElementById("valid_password1")
 var username = document.getElementById("user_name")
 var valid_username = document.getElementById("valid_username")
 var city = document.getElementById("city")

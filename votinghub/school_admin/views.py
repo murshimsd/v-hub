@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from django.core.mail import send_mail
 from voter.models import Voter
@@ -19,7 +20,7 @@ def voters(request):
     if request.method == 'POST':
         vf_name = request.POST['f_name']
         vl_name = request.POST['l_name']
-        v_photo = request.FILES['photo']
+        v_photo = request.FILES["photo"]
         v_email = request.POST['emails']
         v_password = random.randint(1111,9999)
 
@@ -72,6 +73,24 @@ def remove_voter(request,vid) :
     voter= Voter.objects.get(id=vid)
     voter.delete()
     return redirect("school_admin:voters")
+
+def count_voters(request):
+    voters_count = Voter.objects.count()
+    print(voters_count)
+    return render(request,'school_admin/home.html',{"voters_count":voters_count})
+
+def check_mail(request):
+    email_ajax = request.POST['voterEmail'] #recieved from ajax
+    exist = Voter.objects.filter(e_mail=email_ajax).exists()
+    return JsonResponse({"email_exist":exist})
+
+def update_voter(request,v_id):
+    voter= Voter.objects.get(id=v_id)
+    return render(request,'school_admin/voters.html',{"voterss":voter})
+
+
+
+
 
 
 
