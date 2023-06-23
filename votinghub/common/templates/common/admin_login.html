@@ -16,21 +16,23 @@
   <div class="row">
     <div class="col-md-6 sm-12"><img src="{% static 'images/administrator.svg' %}" alt="" class="rounded"></div>
     <div class="col-md-6 sm-12">
-      <form>
+      <form method="POST">
+        {% csrf_token %}
+        {{ msg }}
         <div class="form-group mt-5">
           <label for="exampleInputEmail1">
-            <h4>email</h4>
+            <h4>user id</h4>
           </label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-            placeholder="User id" required>
+          <input type="text" class="form-control" aria-describedby="emailHelp"
+            placeholder="enter id" name="user_id" required>
           <!-- <small id="emailHelp" class="form-text text-dark">We'll never share your email with anyone else.</small> -->
         </div>
         <br />
         <div class="form-group">
           <label for="exampleInputPassword1">
-            <h4>user-id</h4>
+            <h4>password</h4>
           </label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" required>
         </div>
         <br />
         <div class="form-check">

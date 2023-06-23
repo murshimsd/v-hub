@@ -3,7 +3,8 @@
 {% block title %} voters {% endblock %}
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/voters.css' %}">
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
 <style>
     .image {
         height: 60px;
@@ -223,7 +224,8 @@
                                                             <label for="">Email &nbsp; &nbsp; </label>
                                                         </td>
                                                         <td>
-                                                            <input type="email" value="" size="40" name="emails" id="email">
+                                                            <input type="email" value="" size="40" name="emails"
+                                                                id="email">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -276,16 +278,16 @@
                     show entries
                 </div>
                 <div class="col-6">
-                    <form class="example search " action="action_page.php">
-                        <input type="text" placeholder="Search.." name="search">
-                        <button type="submit"><i class="fa fa-search"></i></button>
+                    <form class="example search " action="">
+                        <input type="text" placeholder="Search.." name="search" id="search-input">
+                        <button type="button"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
             </div>
 
         </div>
         <div class="container text-center">
-            <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+
             <div class="row">
                 <div class="col-md-12 mt-5">
                     <table class="table-primary data_table" border="1">
@@ -308,12 +310,12 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-secondary"
                                     style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal2"><i class="fa fa-edit"></i>
+                                    data-bs-target="#exampleModal2-{{ voter.id }}"><i class="fa fa-edit"></i>
                                     edit
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal2" tabindex="-1"
+                                <div class="modal fade" id="exampleModal2-{{ voter.id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content mbody">
@@ -324,30 +326,50 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <table>
-                                                    
-                                                    <tr>
-                                                        <td><label for="">Name : </label></td>
-                                                        <td><span name="namess">{{ voter.f_name }}</span><br></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label for="">Password : </label>
-                                                        </td>
-                                                        <td><input type="text" name="passwrds" value="password"></td>
-                                                    </tr>
-                                                </table>
+                                                <form action="{% url 'school_admin:update_password' voter.id %}"
+                                                    method="POST">
+                                                    {% csrf_token %}
+                                                    <table>
+
+                                                        <tr>
+                                                            <td><label for="">Name : </label></td>
+                                                            <td><span name="namess">{{ voter.f_name }}</span><br></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="">E-mail : </label>
+                                                            </td>
+                                                            <td><span>{{ voter.e_mail }}</span>                                                              
+                                                                    </td>
+                                                        </tr>
+                                                        <tr>
+                                                           
+                                                            <td><input type="hidden" name="e1"
+                                                                    value="{{ voter.e_mail }}" ></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="">Password : </label>
+                                                            </td>
+                                                            <td><input type="text" name="passwrds"
+                                                                    value="{{ voter.password }}"></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
 
 
-
-
+                                                </form>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
+                                           
                                         </div>
+
+
+
                                     </div>
                                 </div>
                                 <span>
@@ -388,45 +410,127 @@
     </div>
 </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/voters.js' %}"></script>
 <script>
-    $("#email").keyup(function(){
+    $("#email").keyup(function () {
         $.ajaxSetup({
-                headers: {
+            headers: {
 
-                    "X-CSRFToken": '{{ csrf_token }}'
+                "X-CSRFToken": '{{ csrf_token }}'
+
+            }
+        })
+
+        $.ajax({
+
+            url: "{% url 'school_admin:check_mail' %}",
+            method: 'POST',
+            data: {
+                "voterEmail": $(this).val()
+
+            },
+            success: function (response) {
+                let exist = response.email_exist
+                if (exist == true) {
+
+                    $("#span_mail").html('email already exist').css({ "color": "red" })
 
                 }
-            })
 
-            $.ajax({
-
-                url : "{% url 'school_admin:check_mail' %}",
-                method : 'POST',
-                data : {
-                    "voterEmail" : $(this).val()
-
-                },
-                success : function(response){
-                    let exist = response.email_exist
-                    if (exist == true){
-
-                        $("#span_mail").html('email already exist').css({"color":"red"})
-
-                    }
-                  
-                }
+            }
 
 
 
-            })
+        })
     })
 
 
 
 
-    
+
+
+    $(document).ready(function () {
+        // Get the search input element
+        const $searchInput = $('#search-input');
+
+        // Event listener for input change
+        $searchInput.on('input', function () {
+            // Get the search query
+            const searchQuery = $searchInput.val();
+            if(searchQuery==""){
+                location.reload();
+            }
+
+            // Create and send the AJAX request
+            $.ajax({
+                url: "{% url 'school_admin:search_voters' %}",
+                type: 'GET',
+                data: { search: searchQuery },
+                dataType: 'json',
+                success: function (results) {
+                    // Process the results and update the table or perform other actions
+                    console.log(results);
+
+                    // Example: Update the table with search results
+                    const $tableBody = $('.data_table tbody');
+                    $tableBody.empty();
+                    
+
+                    results.forEach(function (voter) {
+                        
+                       url="http://127.0.0.1:8000/school_admin/remove_voter/"+voter.id
+                        const $row = $('<tr>');
+                        $row.append('<td>' + voter.f_name + '</td>');
+                        $row.append('<td>' + voter.l_name + '</td>');
+                        $row.append('<td><img src="' + voter.photo_url + '" alt="" style="height: 40px;width: 40px;"></td>');
+                        $row.append('<td>' + voter.password + '</td>');
+                        $row.append('<td>' +
+                            // '<button type="button" class="btn btn-secondary" style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ voter.id }}"><i class="fa fa-edit"></i>edit</button>' +
+                            // '<div class="modal fade" id="exampleModal2-{{ voter.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                            // '<div class="modal-dialog">' +
+                            // '<div class="modal-content mbody">' +
+                            // '<div class="modal-header">' +
+                            // '<h1 class="modal-title fs-5" id="exampleModalLabel" style="margin-left: 15px;">update password</h1>' +
+                            // '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+                            // '</div>' +
+                            // '<div class="modal-body">' +
+                            // '<table>' +
+                            // '<tr>' +
+                            // '<td><label for="">Name : </label></td>' +
+                            // '<td><span name="namess">' + voter.f_name + '</span><br></td>' +
+                            // '</tr>' +
+                            // '<tr>' +
+                            // '<td><label for="">E-mail : </label></td>' +
+                            // '<td><input type="text" name="e1" value="' + voter.e_mail + '" ></td>' +
+                            // '</tr>' +
+                            // '<tr>' +
+                            // '<td><label for="">Password : </label></td>' +
+                            // '<td><input type="text" name="passwrds" value="' + voter.password + '"></td>' +
+                            // '</tr>' +
+                            // '</table>' +
+                            // '</div>' +
+                            // '<div class="modal-footer">' +
+                            // '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>' +
+                            // '<button type="button" class="btn btn-primary">Save changes</button>' +
+                            // '</div>' +
+                            // '</div>' +
+                            // '</div>' +
+                            // '</div>' +
+                            '<span>' +
+                            '<a href="'+ url +'"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>delete</button></a>' +
+                            '</span>' +
+                            '</td>');
+
+                        $tableBody.append($row);
+                    });
+                }
+            });
+        });
+    });
+
 </script>
 
 {% endblock %}

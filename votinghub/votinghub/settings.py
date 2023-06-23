@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'common',
     'candidate',
     'voter',
-    'vadmin',
     'school_admin',
 ]
 
@@ -82,7 +81,7 @@ WSGI_APPLICATION = 'votinghub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'voting_hub',
+        'NAME': 'vo_hub',
         'USER' : 'postgres',
         'PASSWORD' : 'root',
         'HOST' : 'localhost',
@@ -130,7 +129,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'common/static'),
-    os.path.join(BASE_DIR,'vadmin/static'),
+    # os.path.join(BASE_DIR,'vadmin/static'),
     os.path.join(BASE_DIR,'voter/static'),
     os.path.join(BASE_DIR,'candidate/static'),
     os.path.join(BASE_DIR,'school_admin/static'),

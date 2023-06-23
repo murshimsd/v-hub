@@ -64,6 +64,7 @@
     <div class="row">
         <div class="col">
             <h3>Positions</h3>
+            {{ msg }}
         </div>
     </div>
 </div>
@@ -90,48 +91,55 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="">
+                                        <form action="" method="POST" id="myForm">
+                                            {% csrf_token %}
                                             <table id="modal_table" border="0">
                                                 <tr>
                                                     <td>
                                                         <label for="">Title &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select" style="border-radius: 0px;">
-                                                            <option selected disabled>Election-Title</option>
-                                                            <option value="1">2022 calicut univecity election</option>
-                                                            <option value="2">Two</option>
-                                                            <option value="3">Three</option>
+                                                        <select class="form-select" style="border-radius: 0px;" name="title" id="title">
+                                                            
+                                                            <option selected disabled name>Election-Title</option>
+                                                            {% for i in titles %}
+                                                            <option value="1">{{ i.title }}</option>
+                                                            {% endfor %}
+                                                            
                                                         </select>
+                                                        <span id="s_title"></span>
                                                 </tr>
                                                 <tr>
                                                     <td>
                                                         <label for="">Position&nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" value="" size="40">
+                                                        <input type="text" value="" size="40" name="position" id="position">
                                                     </td>
+                                                    <span id="s_position"></span>
                                                 </tr>
                                                 <tr>
                                                     <td>
                                                         <label for="">No : Of Votes &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="number" value="" size="40">
+                                                        <input type="number" value="" size="40" name="no_votes" id="votes">
                                                     </td>
+                                                    <span id="s_vote"></span>
                                                 </tr>
 
 
 
                                             </table>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
+                                                        class="fa fa-close"></i> Close</button>
+                                                <button type="button" class="btn modal_save" id="submitButton" onclick="form_validation()"><i
+                                                        class="fa fa-save" ></i>save</button>
+                                            </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
-                                                class="fa fa-close"></i> Close</button>
-                                        <button type="button" class="btn modal_save"><i
-                                                class="fa fa-save"></i>save</button>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -157,51 +165,88 @@
 
             </div>
             <div class="container text-center">
-                <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+                
                 <div class="row">
                     <div class="col-md-12 mt-5">
                         <table class="table-primary data_table" border="1">
                             <tr>
                                 <th>No</th>
                                 <th>Description</th>
+                                <th>Election</th>
                                 <th>Maximum-Vote</th>
                                 <th>Tools</th>
                             </tr>
-                            <!-- <tr>
-                                <td>1</td>
-                                <td>Chairman</td>
-                                <td> 30</td>
+                            {% for i in positions %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ i.position }}</td>
+                                <td>{{ i.title.title }}</td>
+                                <td> {{ i.no_votes  }}</td>
+        
 
                                 <td>
-                                    <button type="button" class="btn table_edit" data-bs-dismiss="modal"><i
-                                            class="fa fa-edit"></i>edit</button>
+                                    <button type="button" class="btn btn-secondary"
+                                    style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal2-{{ i.id }}"><i class="fa fa-edit"></i>
+                                    edit
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal2-{{ i.id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content mbody">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                                    style="margin-left: 15px;">update position</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'school_admin:update_position' i.id %}"
+                                                    method="POST">
+                                                    {% csrf_token %}
+                                                    <table>
+
+                                                        <tr>
+                                                            <td><label for="">Position : </label></td>
+                                                            <td><span name="namess">{{ i.position }}</span><br></td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                            <td>
+                                                                <label for="">No of votes : </label>
+                                                            </td>
+                                                            <td><input type="number" name="number"
+                                                                    value="{{ i.no_votes }}"></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+                                           
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
                                     <span>
-                                        <button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
-                                                class="fa fa-trash"></i> delet</button>
+                                        <a href="{% url 'school_admin:remove_position' i.id %}"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
+                                                class="fa fa-trash"></i> delet</button></a>
                                     </span>
                                 </td>
 
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vice Chairman</td>
-                                <td> 30</td>
-
-                                <td>
-                                    <button type="button" class="btn table_edit" data-bs-dismiss="modal"><i
-                                            class="fa fa-edit"></i>edit</button>
-                                    <span>
-                                        <button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
-                                                class="fa fa-trash"></i> delet</button>
-                                    </span>
-                                </td>
-
-                            </tr> -->
-                            <tr>
-                                <td colspan="4">
-                                    no data available
-                                </td>
-                            </tr>
+                            {% endfor %}
+                          
                         </table>
                     </div>
                 </div>
@@ -223,4 +268,109 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="{% static 'js/position.js' %}"></script>
+<script>
+     $(document).ready(function() {
+        $('#position').on('blur', function() {
+            var position = $(this).val();
+            var titleId = $('#title').val();
+
+            if (position && titleId) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'school_admin:validate_position' %}",
+                    data: {
+                        'position': position,
+                        'title_id': titleId
+                    },
+                    success: function(response) {
+                        if (!response.valid) {
+                            $('#s_position').text(response.message).css({"color":"red"});
+                        } else {
+                            $('#s_position').empty();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+
+
+
+
+
+
+    function form_validation(){
+var title = document.getElementById("title")
+var s_title = document.getElementById("s_title")
+var position = document.getElementById("position")
+var s_position = document.getElementById("s_position")
+var votes = document.getElementById("votes")
+var s_votes = document.getElementById("s_votes")
+
+
+valid_status=1
+
+
+if (title.value == "") {
+    valid_status = 0
+    s_title.innerHTML = "Enter title"
+    s_title.style.color = "red"
+    s_position.style.display = "block"
+   
+    
+}
+else {
+    valid_status = 1
+    s_title.style.display = "none"
+
+}
+
+if (position.value == "") {
+    valid_status = 0
+    s_position.innerHTML = "enter position"
+    s_position.style.color = "red"
+    s_position.style.display = "block"
+    
+}
+else {
+    valid_status = 1
+    s_position.style.display = "none"
+}
+
+if (votes.value == null) {
+    valid_status = 0
+    s_votes.innerHTML = "enter vote number"
+    s_votes.style.color = "red"
+    s_votes.style.display = "block"
+    
+}
+else {
+    valid_status = 1
+    s_votes.style.display = "none"
+}
+if(valid_status==0){
+    return false
+}
+
+document.getElementById('submitButton').addEventListener('click', function (e) {
+        var form = document.getElementById('myForm');
+        if (!form.checkValidity()) {
+          e.preventDefault(); // Prevent form submission if validation fails
+          // Add your custom validation logic here
+          // Display error messages or highlight invalid fields
+        } else {
+          document.getElementById('submitButton').type = 'submit'; // Change the button type to 'submit'
+        }
+      });
+
+
+
+
+}
+</script>
 {% endblock %}

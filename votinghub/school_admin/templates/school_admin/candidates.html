@@ -4,133 +4,112 @@
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/candidates.css' %}">
 <style>
-     .data_table {
-    width: 900px;
-    border-spacing: 10px;
-    border: none; 
-    box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2); 
-  }
-  
-  .data_table th,
-  .data_table td {
-    font-family: 'Times New Roman', Times, serif;
-    padding: 10px; 
-  }
-  .data_table td {
-    font-size: 18px;
-  }
-  .data_table th{
-    font-size: 18px;
-  }
-  
-  .table_edit,
-  .table_delet {
-    border: none; 
-    color: white;
-    background-color: gray;
-    border-radius: 0;
-    padding: 5px 10px; 
-  }
-  
-  .table_delet {
-    background-color: #f44336;
-  }
-  
-  .next_prev {
-    display: flex;
-    justify-content: flex-end; 
-    margin-top: 20px;
-  }
-  
-  .next_prev a {
-    text-decoration: none;
-    color: black;
-    background-color: #008CBA;
-    border-radius: 2px;
-    border: none; 
-    padding: 5px 10px; 
-    font-size: 14px;
-  }
-  .title h3{
-    margin-top: 18px;
-    margin-left: 4px;
-    color: slategray;
-}
-#logo{
-    height: 60px;
-    width: 60px;
-    float: inline-end;
-    opacity: 0.5;
-}
-.list{
-    background-color:  #d6dce3;
-    box-shadow: 0px 0px 10px black; 
-}
-.modal_btn{
-    background-color: #4CAF50;;
-    color: white;
-    border: 1px solid black;
-    border-radius: 0;
-}
-.modals{
-    border-radius: 0px;
-    font-family: Central Avenue, Arial, sans-serif;
-  }
-.modal_btn:hover{
-    border-color: #04AA6D;
-    color: green;
-  }
+    .data_table {
+        width: 970px;
+        border-spacing: 10px;
+        border: none;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        border: 2px solid white;
+    }
 
-  .modals button{
-border-radius: 0px;
-  }
-  .modal_close{
-    border: 1px solid black;
-    background-color: #f44336;
-    color: white;
-  }
-  .modal_save{
-    border: 1px solid black;
-    color: white;
-    background-color: #008CBA;
-  }
-  .search{
-    margin-left: 149px;
-  }
-  .data_table{
-    width: 900px;
-    border-spacing: 10px;
-    border: 2px solid white;
-  }
-  .data_table td{
-    font-family: 'Times New Roman', Times, serif ;
-  }
-  .table_edit{
-    border: 1px solid black;
-    color: white;
-    background-color: gray;
-    border-radius: 0px;
-  }
-  .table_delet{
-    border: 1px solid black;
-    background-color: #f44336;
-    color: white;
-    border-radius: 0px;
-  }
-  .next_prev{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    float: right;
-  }
-  .next_prev a{
-    text-decoration: none;
-    color: black;
-    background-color: #008CBA;
-    border-radius: 2px;
-    border: 1px solid black;  
-    font-size: 14px;
-  }
+    .data_table th,
+    .data_table td {
+        font-family: 'Times New Roman', Times, serif;
+        padding: 10px;
+    }
+
+    .data_table td {
+        font-size: 18px;
+    }
+
+    .data_table th {
+        font-size: 18px;
+    }
+
+    .table_edit,
+    .table_delet {
+        border: none;
+        color: white;
+        background-color: gray;
+        border-radius: 0;
+        padding: 5px 10px;
+    }
+
+    .table_delet {
+        background-color: #f44336;
+    }
+
+    .next_prev {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .next_prev a {
+        text-decoration: none;
+        color: black;
+        background-color: #008CBA;
+        border-radius: 2px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .title h3 {
+        margin-top: 18px;
+        margin-left: 4px;
+        color: slategray;
+    }
+
+    #logo {
+        height: 60px;
+        width: 60px;
+        float: inline-end;
+        opacity: 0.5;
+    }
+
+    .list {
+        background-color: #d6dce3;
+        box-shadow: 0px 0px 10px black;
+    }
+
+    .modal_btn {
+        background-color: #4CAF50;
+        ;
+        color: white;
+        border: 1px solid black;
+        border-radius: 0;
+    }
+
+    .modals {
+        border-radius: 0px;
+        font-family: Central Avenue, Arial, sans-serif;
+    }
+
+    .modal_btn:hover {
+        border-color: #04AA6D;
+        color: green;
+    }
+
+    .modals button {
+        border-radius: 0px;
+    }
+
+    .modal_close {
+        border: 1px solid black;
+        background-color: #f44336;
+        color: white;
+    }
+
+    .modal_save {
+        border: 1px solid black;
+        color: white;
+        background-color: #008CBA;
+    }
+
+    .search {
+        margin-left: 149px;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -141,19 +120,19 @@ border-radius: 0px;
         </div>
     </div>
 </div>
-<div class="container list">
+<div class="container list" >
     <div class="row">
         <div class="col">
             <div class="container ">
                 <div class="row mt-3">
                     <div class="col add_button">
-                        
+
                         <button type="button" class="btn  modal_btn btn-square" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             <i class="fa fa-plus"></i> Add
                         </button>
 
-                        
+
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
@@ -164,34 +143,39 @@ border-radius: 0px;
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="">
+                                        <form action="" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
                                             <table id="modal_table" border="0">
                                                 <tr>
                                                     <td>
-                                                        <label for="">First name &nbsp; &nbsp; </label>
+                                                        <label for="">Name &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" value="" size="40">
+                                                        <input type="text" value="" size="40" name="name">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <label for="">Last Name &nbsp; &nbsp; </label>
+                                                        <label for="">E-mail &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" value="" size="40">
+                                                        <input type="email" value="" size="40" name="email" id="email">
                                                     </td>
+                                                    <span id="span_mail"></span>
                                                 </tr>
+
                                                 <tr>
                                                     <td>
                                                         <label for="">Election &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select" style="border-radius: 0px;">
+                                                        <select class="form-select" style="border-radius: 0px;"
+                                                            name="title" id="election-title-select">
                                                             <option selected disabled>Election-Title</option>
-                                                            <option value="1">2022 calicut univecity election</option>
-                                                            <option value="2">Two</option>
-                                                            <option value="3">Three</option>
+                                                            {% for i in titles %}
+                                                            <option value="{{ i.id }}">{{ i.title }}</option>
+                                                            {% endfor %}
+
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -200,11 +184,10 @@ border-radius: 0px;
                                                         <label for="">Position</label>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select" style="border-radius: 0px;">
+                                                        <select class="form-select" style="border-radius: 0px;"
+                                                            name="position" id="position-select">
                                                             <option selected disabled>select</option>
-                                                            <option value="1">Chairman</option>
-                                                            <option value="2">Vice chairman</option>
-                                                            <option value="3">....</option>
+                                            
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -218,7 +201,7 @@ border-radius: 0px;
                                                             <input type="file" class="form-control load_image"
                                                                 id="inputGroupFile04"
                                                                 aria-describedby="inputGroupFileAddon04"
-                                                                aria-label="Upload" style="width: 20px;">
+                                                                aria-label="Upload" style="width: 20px;" name="photo">
                                                             <button class="btn btn-outline-success" type="button"
                                                                 id="inputGroupFileAddon04">uppload</button>
                                                         </div>
@@ -229,7 +212,7 @@ border-radius: 0px;
                                                         <label for="">Platform</label>
                                                     </td>
                                                     <td>
-                                                        <textarea name="" id="" cols="30" rows="10">
+                                                        <textarea id="" cols="30" rows="10" name="platform">
 
                                                         </textarea>
                                                     </td>
@@ -237,14 +220,15 @@ border-radius: 0px;
 
 
                                             </table>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
+                                                        class="fa fa-close"></i> Close</button>
+                                                <button type="submit" class="btn modal_save"><i
+                                                        class="fa fa-save"></i>save</button>
+                                            </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
-                                                class="fa fa-close"></i> Close</button>
-                                        <button type="button" class="btn modal_save"><i
-                                                class="fa fa-save"></i>save</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -270,73 +254,140 @@ border-radius: 0px;
 
             </div>
             <div class="container text-center">
-        
+
                 <div class="row">
+                    {{ msgs }}
                     <div class="col-md-12 mt-5">
                         <table class="table-primary data_table" border="1">
                             <tr>
-                                <th>Position</th>
+
+
+                                <th>Name</th>
                                 <th>Photo</th>
-                                <th>First Name</th>
-                                <th>Last name</th>
+                                <th>Position</th>
+                                <th>password</th>
+                                <th>Election</th>
                                 <th>platform</th>
-                            
+                                <th>E-mail</th>
                                 <th>Tools</th>
                             </tr>
+                            {% for candidate in candidates %}
                             <tr>
-                                <td>chairman</td>
-                                <td></td>
-                                <td>murshi</td>
-                                <td>pk</td>
+                                <td>{{ candidate.name }}</td>
+                                <td><img src="{{ candidate.photo.url }}" alt="" style="height: 50px; width: 50px;"></td>
+                                <td>{{ candidate.position.position }}</td>
+                                <td>{{ candidate.password }}</td>
+                                <td>{{ candidate.title.title }}</td>
+
                                 <td>
                                     <button type="button" class="btn platform" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                    </svg>
-                                    platform
+                                        data-bs-target="#exampleModal2-{{ candidate.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg>
+                                        platform
+                                    </button>
+
+
+                                    <div class="modal fade" id="exampleModal2-{{ candidate.id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">hello friends
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ candidate.platform}}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ candidate.email }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary"
+                                    style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal23-{{ candidate.id }}"><i class="fa fa-edit"></i>
+                                    
                                 </button>
 
-                            
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal23-{{ candidate.id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content mbody">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">hello friends
-                                                </h1>
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                                    style="margin-left: 15px;">update candidate</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                vdfghjkl
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
+                                                <form action="{% url 'school_admin:update_candidate' candidate.id %}"
+                                                    method="POST">
+                                                    {% csrf_token %}
+                                                    <table>
 
+                                                        <tr>
+                                                            <td><label for="">Name : </label></td>
+                                                            <td><span name="namess">{{ candidate.name }}</span><br></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="">E-mail : </label>
+                                                            </td>
+                                                            <td><span>{{ candidate.email }}</span>                                                              
+                                                                    </td>
+                                                        </tr>
+                                                        <tr>
+                                                           
+                                                            <td><input type="hidden" name="e2"
+                                                                    value="{{ candidate.email }}" ></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="">Password : </label>
+                                                            </td>
+                                                            <td><input type="text" name="passwrds"
+                                                                    value="{{ candidate.password }}"></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+
+
+                                                </form>
                                             </div>
+                                           
                                         </div>
+
+
+
                                     </div>
-                                </div>  
-                                </td>
-                                <td>
-                                    <button type="button" class="btn table_edit" data-bs-dismiss="modal"><i
-                                            class="fa fa-edit"></i>edit</button>
-                                    <span>
-                                        <button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
-                                                class="fa fa-trash"></i> delet</button>
-                                    </span>
+                                </div>
+                                    
+                                        <a href="{% url 'school_admin:remove_candidate' candidate.id  %}"><button type="button" class="btn table_delet" data-bs-dismiss="modal" style="margin-top: 3px;"><i
+                                                class="fa fa-trash"></i></button></a>
+                                    
                                 </td>
 
                             </tr>
-                           <tr>
-                            <td colspan="6">
-no data so far
-                            </td>
-                           </tr>
+                            {% endfor %}
+                           
                         </table>
                     </div>
                 </div>
@@ -359,4 +410,71 @@ no data so far
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/candidates.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        
+        $('#election-title-select').change(function() {
+            var selectedTitleId = $(this).val(); // Get the selected title ID
+
+            // Send an AJAX request to fetch the positions for the selected title
+            $.ajax({
+                url: "{% url 'school_admin:get_positions' %}",  // Replace with the URL for your AJAX endpoint
+                method: 'GET',
+                data: { title_id: selectedTitleId },
+                success: function(response) {
+                    // Clear the positions select element
+                    $('#position-select').empty();
+
+                    // Append the positions to the positions select element
+                    response.positions.forEach(function(position) {
+                        $('#position-select').append('<option value="' + position.id + '">' + position.position + '</option>');
+                    });
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        });
+    });
+
+
+
+
+
+    $("#email").keyup(function () {
+        $.ajaxSetup({
+            headers: {
+
+                "X-CSRFToken": '{{ csrf_token }}'
+
+            }
+        })
+
+        $.ajax({
+
+            url: "{% url 'school_admin:check_mail_candidate' %}",
+            method: 'POST',
+            data: {
+                "candidateEmail": $(this).val()
+
+            },
+            success: function (response) {
+                let exist = response.email_exist
+                if (exist == true) {
+
+                    $("#span_mail").html('email already exist').css({ "color": "red" })
+
+                }
+
+            }
+
+
+
+        })
+    })
+
+    
+</script>
 {% endblock %}

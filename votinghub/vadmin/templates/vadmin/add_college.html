@@ -16,35 +16,34 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <form class="row g-3 form">
+      {{ msg }}
+      <form class="row g-3 form" method="POST">
+        {% csrf_token %}
+        
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">College name</label>
-          <input type="text" class="form-control" value="" id="college_name1" placeholder="enter college name" required >
+          <input type="text" class="form-control" value="" id="college_name1" placeholder="enter college name" name="school_name" required >
           <span id="s_college"></span>
         </div>
         <div class="col-md-6">
           <label for="inputPassword4" class="form-label">User name</label>
-          <input type="text" class="form-control" id="user_name" value="" placeholder="enter user name">
+          <input type="text" class="form-control" id="user_name" value="" placeholder="enter user name" name="user_name">
           <span id="valid_username"></span>
         </div>
         <div class="col-8">
           <label for="inputAddress" class="form-label">E-mail_address</label>
-          <input type="email" class="form-control" id="emails" placeholder="official mail address" value="" required>
+          <input type="email" class="form-control" id="emails" placeholder="official mail address" value="" name="email" required>
           <span id="s_emails"></span>
         </div>
-        <!-- <div class="col-4">
-          <label for="inputAddress2" class="form-label">password</label>
-          <input type="text" class="form-control" id="password1" placeholder="password" value="">
-          <span id="valid_password1"></span>
-        </div> -->
+       
         <div class="col-md-6">
           <label for="inputCity" class="form-label">City</label>
-          <input type="text" class="form-control" id="city" value="" placeholder="city" required>
+          <input type="text" class="form-control" id="city" value="" placeholder="city" name="city" required>
           <span id="s_city"></span>
         </div>
         <div class="col-md-4">
           <label for="inputState" class="form-label">State</label>
-          <select  class="form-select" id="state1">
+          <select  class="form-select" id="state1" name="state">
             <option disabled value="" selected>Choose...</option>
             <option value="kerala">kerala</option>
             <option value="karnataka">karnataka</option>
@@ -52,11 +51,7 @@
           </select>
           <span id="state2"></span>
         </div>
-        <div class="col-md-2">
-          <label for="inputZip" class="form-label">Zip</label>
-          <input type="text" class="form-control" id="inputZip">
-        </div>
-        <div class="col-12">
+   
           
         </div>
         <div class="col-12 mb-3">
@@ -72,6 +67,41 @@
 </div>
 
     
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="{% static 'js/add_college.js' %}"></script>
+<script>
+  $("#emails").keyup(function(){
+    $.ajaxSetup({
+            headers: {
+
+                "X-CSRFToken": '{{ csrf_token }}'
+
+            }
+        })
+
+        $.ajax({
+
+            url : "{% url 'vadmin:check_mail' %}",
+            method : 'POST',
+            data : {
+                "schoolEmail" : $(this).val()
+
+            },
+            success : function(response){
+                let exist = response.email_exist
+                if (exist == true){
+
+                    $("#s_emails").html('email already exist').css({"color":"red"})
+
+                }
+              
+            }
+
+
+
+        })
+})
+</script>
 {% endblock %}

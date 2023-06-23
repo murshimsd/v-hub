@@ -32,6 +32,7 @@ def update_profile(request):
         voter.e_mail = new_email
         
         
+        
        
         voter.save()
         msg = 'successfully updated'

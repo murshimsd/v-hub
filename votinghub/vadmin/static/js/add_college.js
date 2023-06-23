@@ -87,3 +87,38 @@ if(valid_status==0){
     return false
 }
 }
+
+
+
+
+$("#emails").keyup(function(){
+    $.ajaxSetup({
+            headers: {
+
+                "X-CSRFToken": '{{ csrf_token }}'
+
+            }
+        })
+
+        $.ajax({
+
+            url : "{% url 'vadmin:check_mail' %}",
+            method : 'POST',
+            data : {
+                "schoolEmail" : $(this).val()
+
+            },
+            success : function(response){
+                let exist = response.email_exist
+                if (exist == true){
+
+                    $("#s_emails").html('email already exist').css({"color":"red"})
+
+                }
+              
+            }
+
+
+
+        })
+})

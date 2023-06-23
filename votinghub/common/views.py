@@ -1,5 +1,7 @@
 from django.shortcuts import render , redirect
 from voter.models import Voter
+from school_admin.models import Admin
+# from vadmin.models import Schools
 
 # Create your views here.
 
@@ -7,7 +9,21 @@ def vote(request):
     return render(request,'common/vote.html')
  
 def admin_login(request):
-    return render(request,'common/admin_login.html')  
+    msg = ''
+    if request.method == 'POST':
+        u_name = request.POST['user_id']
+        passwords = request.POST['password']
+
+        try:
+            admins = Admin.objects.get(user_id = u_name,password=passwords)
+            request.session['admins'] = admins.id
+            msg = 'correct'
+            return redirect('school_admin:home')
+        except:
+            msg = 'incorrect'
+
+    return render(request,'common/admin_login.html',{"msg":msg})
+    
 
 
 

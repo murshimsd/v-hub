@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+# from vadmin.models import Schools
 
 # Create your models here.
 
@@ -9,6 +10,8 @@ class Voter(models.Model):
     password = models.CharField(max_length = 20 ,default = '')
     photo = models.ImageField(upload_to  = 'voter/')
     e_mail = models.CharField(max_length = 30,default='')
+
+    
 
 
     class Meta:
