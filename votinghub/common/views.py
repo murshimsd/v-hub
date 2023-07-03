@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect
 from voter.models import Voter
+from candidate.models import Candidates
 from school_admin.models import Admin
 # from vadmin.models import Schools
 
@@ -48,6 +49,33 @@ def voter_login(request):
 
 
     return render(request,'common/voter_login.html',{"msg":msgs})   
+
+
+
+
+
+
+
+def candidate_login(request):
+
+    msgs = ''
+
+    if request.method == 'POST':
+
+        v_email = request.POST['email']
+        passwords = request.POST['password']
+
+        try:
+            candidate = Candidates.objects.get(email = v_email , password = passwords )
+            request.session['candidate'] = candidate.id
+            request.session['candidate_name'] = candidate.name
+            request.session['candidate_photo'] = candidate.photo.url
+            return redirect('candidate:home')
+
+        except :
+            msgs = 'incorrect mail or password'
+
+    return render(request,'common/candidate_login.html',{"msg":ms})  
 
 
 

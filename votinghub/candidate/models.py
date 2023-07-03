@@ -1,5 +1,6 @@
 from django.db import models
 from school_admin.models import Title , Positions
+from voter.models import Voter
 
 
 
@@ -16,6 +17,22 @@ class Candidates(models.Model):
 
     class Meta:
         db_table = 'candidate_tb'
+
+
+
+
+
+class Votes(models.Model):
+    position = models.ForeignKey(Positions, on_delete=models.CASCADE)
+    voter = models.ForeignKey(Voter, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidates, on_delete=models.CASCADE)
+    
+    
+
+    class Meta:
+        db_table = 'votes_tb'
+
+
 
 
 

@@ -1,5 +1,8 @@
 from django.db import models
 
+# from voter.models import Voter
+
+
 # Create your models here.
 
 
@@ -12,11 +15,18 @@ class Admin (models.Model) :
         db_table = 'admin_tb'
 
 
+
+
+
 class Title(models.Model):
     title = models.CharField(max_length=500)
+    date = models.DateField(default='2023-06-23')
 
     class Meta :
         db_table = 'title_tb'
+
+
+
 
 class Positions(models.Model):
     position = models.CharField(max_length=50)
@@ -26,6 +36,16 @@ class Positions(models.Model):
 
     class Meta :
         db_table = 'positions_tb'
+
+
+
+
+
+
+
+
+
+
 
 
 

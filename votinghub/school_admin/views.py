@@ -5,6 +5,7 @@ from django.contrib import messages
 from voter.models import Voter
 from candidate.models import Candidates
 from .models import Title , Positions
+from django.db.models import F
 
 import random
 from django.conf import settings
@@ -36,6 +37,7 @@ def home(request):
 
 
 def voters(request):
+    title = Title.objects.all()
     msg = ''
     voters = Voter.objects.all()
     if request.method == 'POST':
@@ -73,7 +75,7 @@ def voters(request):
 
     
 
-    return render(request,'school_admin/voters.html',{"msg":msg,"voters":voters})
+    return render(request,'school_admin/voters.html',{"msg":msg,"voters":voters,"titles":title})
 
 
 
@@ -134,7 +136,29 @@ def validate_position(request):
 
 def title(request):
     title = Title.objects.all()
-    return render(request,'school_admin/title.html',{"titles":title})
+    msg = ''
+    
+    if request.method == 'POST':
+        vf_name = request.POST['name']
+        vl_date = request.POST['date']
+        
+
+        title_exist = Title.objects.filter(title = vf_name).exists()
+        if not title_exist :
+            new_title = Title (
+                title = vf_name,
+                date = vl_date,
+                
+                
+            )
+            
+            new_title.save()
+            msg = 'success'
+            
+
+        else :
+            msg = 'election already  exist '
+    return render(request,'school_admin/title.html',{"titles":title,"msg":msg})
 
 
 
@@ -363,6 +387,54 @@ def search_voters(request):
             'photo_url': voter.photo.url,
             'password': voter.password,
             'id': voter.id
+            # Add other fields as needed
+        }
+        results.append(result)
+
+    return JsonResponse(results, safe=False)
+
+
+
+
+
+def search_position(request):
+    search_word = request.GET.get('search')
+
+    # Filter positions based on the search word
+    positions = Positions.objects.filter(position__icontains=search_word)
+
+    # Convert positions queryset to a list of dictionaries
+    positions_data = [
+        {
+            'position': position.position,
+            'title': position.title.title,  # Access the title attribute of the related model
+            'no_votes': position.no_votes,
+            'id' : position.id
+        }
+        for position in positions
+    ]
+
+    # Return the filtered positions as JSON data
+    return JsonResponse(positions_data, safe=False)
+
+
+
+
+
+
+def search_candidates(request):
+    search_word = request.GET.get("search")
+    candidates = Candidates.objects.filter(name__icontains=search_word)
+    results = []
+
+    for candidate in candidates:
+        result = {
+            'name': candidate.name,
+            'photo_url': candidate.photo.url,
+            'position': candidate.position,
+            'password': candidate.password,
+            'email':candidate.email,
+            'id': candidate.id
             # Add other fields as needed
         }
         results.append(result)

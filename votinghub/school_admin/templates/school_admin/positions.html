@@ -107,7 +107,11 @@
                                                             {% endfor %}
                                                             
                                                         </select>
-                                                        <span id="s_title"></span>
+                                                        
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><span id="s_title"></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -116,7 +120,12 @@
                                                     <td>
                                                         <input type="text" value="" size="40" name="position" id="position">
                                                     </td>
-                                                    <span id="s_position"></span>
+                                                   
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><span id="s_position"></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -125,7 +134,11 @@
                                                     <td>
                                                         <input type="number" value="" size="40" name="no_votes" id="votes">
                                                     </td>
-                                                    <span id="s_vote"></span>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><span id="s_vote"></span></td>
                                                 </tr>
 
 
@@ -134,7 +147,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
                                                         class="fa fa-close"></i> Close</button>
-                                                <button type="button" class="btn modal_save" id="submitButton" onclick="form_validation()"><i
+                                                <button type="submit" class="btn modal_save" ><i
                                                         class="fa fa-save" ></i>save</button>
                                             </div>
                                         </form>
@@ -156,9 +169,9 @@
                         show entries
                     </div>
                     <div class="col-6">
-                        <form class="example search " action="action_page.php">
-                            <input type="text" placeholder="Search.." name="search">
-                            <button type="submit"><i class="fa fa-search"></i></button>
+                        <form class="example search " action="">
+                            <input type="text" placeholder="Search.." name="search" id="search-input">
+                            <button type="button"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                 </div>
@@ -304,73 +317,131 @@
 
 
 
-    function form_validation(){
-var title = document.getElementById("title")
-var s_title = document.getElementById("s_title")
-var position = document.getElementById("position")
-var s_position = document.getElementById("s_position")
-var votes = document.getElementById("votes")
-var s_votes = document.getElementById("s_votes")
 
+    $(document).ready(function() {
+    $('#myForm').submit(function(event) {
+        event.preventDefault(); // Prevent the form from submitting
 
-valid_status=1
+        // Clear previous error messages
+        $('.error').empty();
 
+        // Retrieve form values
+        var title = $('#title').val();
+        var position = $('#position').val();
+        var votes = $('#votes').val();
 
-if (title.value == "") {
-    valid_status = 0
-    s_title.innerHTML = "Enter title"
-    s_title.style.color = "red"
-    s_position.style.display = "block"
-   
-    
-}
-else {
-    valid_status = 1
-    s_title.style.display = "none"
+        var isValid = true; // Track form validation
 
-}
-
-if (position.value == "") {
-    valid_status = 0
-    s_position.innerHTML = "enter position"
-    s_position.style.color = "red"
-    s_position.style.display = "block"
-    
-}
-else {
-    valid_status = 1
-    s_position.style.display = "none"
-}
-
-if (votes.value == null) {
-    valid_status = 0
-    s_votes.innerHTML = "enter vote number"
-    s_votes.style.color = "red"
-    s_votes.style.display = "block"
-    
-}
-else {
-    valid_status = 1
-    s_votes.style.display = "none"
-}
-if(valid_status==0){
-    return false
-}
-
-document.getElementById('submitButton').addEventListener('click', function (e) {
-        var form = document.getElementById('myForm');
-        if (!form.checkValidity()) {
-          e.preventDefault(); // Prevent form submission if validation fails
-          // Add your custom validation logic here
-          // Display error messages or highlight invalid fields
-        } else {
-          document.getElementById('submitButton').type = 'submit'; // Change the button type to 'submit'
+        // Validate title field
+        if (!title) {
+            $('#s_title').text('Please select a title.').addClass('error').css({"color":"red"});
+            isValid = false;
         }
-      });
+
+        // Validate position field
+        if (!position) {
+            $('#s_position').text('Please enter a position.').addClass('error').css({"color":"red"});
+            isValid = false;
+        }
+
+        // Validate votes field
+        if (!votes) {
+            $('#s_vote').text('Please enter the number of votes.').addClass('error').css({"color":"red"});
+            isValid = false;
+        } else if (votes < 0) {
+            $('#s_vote').text('Number of votes must be a positive value.').addClass('error').css({"color":"red"});
+            isValid = false;
+        }
+
+        if (isValid) {
+            // Form is valid, perform form submission
+            this.submit();
+        }
+    });
+});
 
 
 
 
-}
+
+$(document).ready(function () {
+        // Get the search input element
+        const $searchInput = $('#search-input');
+
+        // Event listener for input change
+        $searchInput.on('input', function () {
+            // Get the search query
+            const searchQuery = $searchInput.val();
+            if (searchQuery == "") {
+                location.reload();
+            }
+
+            // Create and send the AJAX request
+            $.ajax({
+                url: "{% url 'school_admin:search_position' %}",
+                type: 'GET',
+                data: { search: searchQuery },
+                dataType: 'json',
+                success: function (results) {
+                    // Process the results and update the table or perform other actions
+                    console.log(results);
+
+                    // Example: Update the table with search results
+                    const $tableBody = $('.data_table tbody');
+                    $tableBody.empty();
+
+
+                    results.forEach(function (position) {
+
+                         url = "http://127.0.0.1:8000/school_admin/remove_position/" + position.id
+                        const $row = $('<tr>');
+                        $row.append('<td>' + position.position + '</td>');
+                        $row.append('<td>' + position.title + '</td>');
+                        $row.append('<td>' + position.no_votes + '</td>');
+                        $row.append('<td>' +
+                            // '<button type="button" class="btn btn-secondary" style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ voter.id }}"><i class="fa fa-edit"></i>edit</button>' +
+                            // '<div class="modal fade" id="exampleModal2-{{ voter.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                            // '<div class="modal-dialog">' +
+                            // '<div class="modal-content mbody">' +
+                            // '<div class="modal-header">' +
+                            // '<h1 class="modal-title fs-5" id="exampleModalLabel" style="margin-left: 15px;">update password</h1>' +
+                            // '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+                            // '</div>' +
+                            // '<div class="modal-body">' +
+                            // '<table>' +
+                            // '<tr>' +
+                            // '<td><label for="">Name : </label></td>' +
+                            // '<td><span name="namess">' + voter.f_name + '</span><br></td>' +
+                            // '</tr>' +
+                            // '<tr>' +
+                            // '<td><label for="">E-mail : </label></td>' +
+                            // '<td><input type="text" name="e1" value="' + voter.e_mail + '" ></td>' +
+                            // '</tr>' +
+                            // '<tr>' +
+                            // '<td><label for="">Password : </label></td>' +
+                            // '<td><input type="text" name="passwrds" value="' + voter.password + '"></td>' +
+                            // '</tr>' +
+                            // '</table>' +
+                            // '</div>' +
+                            // '<div class="modal-footer">' +
+                            // '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>' +
+                            // '<button type="button" class="btn btn-primary">Save changes</button>' +
+                            // '</div>' +
+                            // '</div>' +
+                            // '</div>' +
+                            // '</div>' +
+                            '<span>' +
+                            '<a href="' + url + '"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>delete</button></a>' +
+                            '</span>' +
+                            '</td>');
+
+                        $tableBody.append($row);
+                    });
+                }
+            });
+        });
+    });
+
+
 </script>
 {% endblock %}

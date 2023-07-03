@@ -10,7 +10,7 @@
 
 
 <style>
- 
+
 </style>
 {% endblock %}
 {% block content %}
@@ -18,21 +18,24 @@
   <div class="row ">
     <div class="col-md-6 sm-12"><img src="{% static 'images/suit2.png' %}" alt="" class="rounded"></div>
     <div class="col-md-6 sm-12">
-      <form>
+      <form method="POST">
+        {% csrf_token %}
+        {{ msg }}
         <div class="form-group mt-5">
           <label for="exampleInputEmail1">
-            <h4>User id</h4>
+            <h4>E-mail</h4>
           </label>
-          <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-            placeholder="User id" required>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            placeholder="Enter Your Mail" required name="email">
           <!-- <small id="emailHelp" class="form-text text-dark">We'll never share your email with anyone else.</small> -->
         </div>
         <br />
         <div class="form-group">
           <label for="exampleInputPassword1">
-            <h4>password</h4>
+            <h4>Password</h4>
           </label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required
+            name="password">
         </div>
         <br />
         <div class="form-check">
@@ -43,10 +46,10 @@
         </div>
         <br />
         <button type="submit" class="btn btn-success">login</button><br />
-        
+
 
       </form>
     </div>
-</div>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}

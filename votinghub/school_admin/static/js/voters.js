@@ -104,3 +104,64 @@ $("#email").keyup(function(){
         });
     });
 });
+
+
+
+
+
+$(document).ready(function() {
+    $('#add').submit(function(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      var f_name = $('input[name="f_name"]').val();
+      var l_name = $('input[name="l_name"]').val();
+      var email = $('input[name="emails"]').val();
+      var photo = $('input[name="photo"]').val();
+      
+      // Reset error messages
+      $('.error').empty();
+      $('input').removeClass('error');
+      
+      // Validate first name
+      if (f_name.length === 0) {
+        $('input[name="f_name"]').addClass('error');
+        $('#span_f_name').text('Please enter first name').css({ "color": "red" });
+      }
+      
+      // Validate last name
+      if (l_name.length === 0) {
+        $('input[name="l_name"]').addClass('error');
+        $('#span_l_name').text('Please enter last name').css({ "color": "red" });
+      }
+      
+      // Validate email
+      if (email.length === 0) {
+        $('input[name="emails"]').addClass('error');
+        $('#span_mail').text('Please enter email');
+      } else if (!validateEmail(email)) {
+        $('input[name="emails"]').addClass('error');
+        $('#span_mail').text('Please enter a valid email address').css({ "color": "red" });
+      }
+      
+      // Validate photo
+      if (photo.length === 0) {
+        $('input[name="photo"]').addClass('error');
+        $('#span_photo').text('Please select a photo').css({ "color": "red" });
+      }
+      
+      // If there are any errors, do not proceed with form submission
+      if ($('.error').length > 0) {
+        return;
+      }
+      
+      // If the form is valid, proceed with form submission
+      this.submit();
+    });
+    
+    // Email validation function
+    function validateEmail(email) {
+      var emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+      return emailPattern.test(email);
+    }
+  });
+  
