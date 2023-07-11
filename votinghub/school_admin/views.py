@@ -2,13 +2,16 @@ from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from django.core.mail import send_mail
 from django.contrib import messages
-from voter.models import Voter
-from candidate.models import Candidates
+from voter.models import Voter 
+from candidate.models import Candidates , Votes
 from .models import Title , Positions
-from django.db.models import F
+from django.db.models import F,Q
+from django.core.cache import cache
+from django.shortcuts import get_object_or_404
 
 import random
 from django.conf import settings
+
 
 
 # Create your views here.
@@ -28,26 +31,29 @@ def logout(request) :
 
 
 def home(request):
-    voters_count = Voter.objects.all().count()
-    candidates_count = Candidates.objects.all().count()
-    positions_count = Positions.objects.all().count()
+    titles= Title.objects.get(status='active')
+    voters_count = Voter.objects.filter(title_id=titles.id).count()
+    candidates_count = Candidates.objects.filter(title_id=titles.id).count()
+    positions_count = Positions.objects.filter(title_id=titles.id).count()
     return render(request,'school_admin/home.html',{"voters_count":voters_count,"candidates_count":candidates_count,"positions_count":positions_count})
 
 
 
 
 def voters(request):
-    title = Title.objects.all()
+    titles = Title.objects.get(status='active')
+    
     msg = ''
-    voters = Voter.objects.all()
+    voters = Voter.objects.filter(title_id=titles.id)
     if request.method == 'POST':
         vf_name = request.POST['f_name']
         vl_name = request.POST['l_name']
         v_photo = request.FILES["photo"]
         v_email = request.POST['emails']
         v_password = random.randint(1111,9999)
+        v_title = request.POST['title']
 
-        voter_exist = Voter.objects.filter(e_mail = v_email).exists()
+        voter_exist = Voter.objects.filter(e_mail = v_email,title_id=v_title).exists()
         if not voter_exist :
             new_voter = Voter (
                 f_name = vf_name,
@@ -55,6 +61,7 @@ def voters(request):
                 photo = v_photo,
                 e_mail = v_email,
                 password = v_password,
+                title_id = v_title
                 
             )
             pas = 'your password is '+str(v_password)
@@ -71,11 +78,11 @@ def voters(request):
             
 
         else :
-            msg = 'mail exist '
+            msg = 'mail exist'
 
     
 
-    return render(request,'school_admin/voters.html',{"msg":msg,"voters":voters,"titles":title})
+    return render(request,'school_admin/voters.html',{"msg":msg,"voters":voters,"titles":titles})
 
 
 
@@ -83,8 +90,8 @@ def voters(request):
 
 def positions(request):
 
-    titles = Title.objects.all()
-    positions = Positions.objects.all()
+    titles = Title.objects.get(status='active')
+    positions = Positions.objects.filter(title_id=titles.id)
 
 
 
@@ -94,7 +101,7 @@ def positions(request):
         vf_position = request.POST['position']
         vl_title = request.POST['title']
         v_votes = request.POST["no_votes"]
-        position_exist = Positions.objects.filter(position=vf_position,title=vl_title).exists()
+        position_exist = Positions.objects.filter(position=vf_position,title_id=vl_title).exists()
         if not position_exist :
             new_position = Positions (
 
@@ -166,8 +173,8 @@ def title(request):
 
 
 def candidates(request):
-    titles = Title.objects.all()
-    candidatess = Candidates.objects.all()
+    titles = Title.objects.get(status='active')
+    candidatess = Candidates.objects.filter(title_id=titles.id)
 
 
     msg = ''
@@ -182,7 +189,7 @@ def candidates(request):
         c_platform = request.POST['platform']
         c_photo = request.FILES['photo']
         c_password = random.randint(1111,9999)
-        candidate_exist = Candidates.objects.filter(email=c_mail).exists()
+        candidate_exist = Candidates.objects.filter(email=c_mail,title_id=titles.id).exists()
         if not candidate_exist :
             title = Title.objects.get(id=c_title_id)
             position = Positions.objects.get(id=c_position_id)
@@ -210,7 +217,7 @@ def candidates(request):
         else :
             msg = 'already existed mail'
 
-    return render(request,'school_admin/candidates.html',{"titles":titles,"msgs":msg,"candidates":candidatess})
+    return render(request,'school_admin/candidates.html',{"titles":titles,"msg":msg,"candidates":candidatess})
 
 
 
@@ -228,7 +235,8 @@ def get_positions(request):
 
 
 def ballot_position(request):
-    positions = Positions.objects.all()
+    titles= Title.objects.get(status='active')
+    positions = Positions.objects.filter(title_id=titles.id)
 
     position_candidates = {}
     for position in positions:
@@ -243,7 +251,10 @@ def ballot_position(request):
 
 
 def votes(request):
-    return render(request,'school_admin/votes.html')
+    votess = Title.objects.get(status='active')
+    votess_id = Votes.objects.filter(title_id=votess.id)
+
+    return render(request,'school_admin/votes.html',{"votes":votess_id,'id':votess})
 
 
 
@@ -275,7 +286,8 @@ def remove_position(request,pid) :
 
 def check_mail(request):
     email_ajax = request.POST['voterEmail'] #recieved from ajax
-    exist = Voter.objects.filter(e_mail=email_ajax).exists()
+    titles = request.POST['id']
+    exist = Voter.objects.filter(e_mail=email_ajax,title_id=titles).exists()
     return JsonResponse({"email_exist":exist})
 
 
@@ -283,8 +295,9 @@ def check_mail(request):
 
 
 def check_mail_candidate(request):
-    email_ajax = request.POST['candidateEmail'] #recieved from ajax
-    exist = Candidates.objects.filter(email=email_ajax).exists()
+    email_ajax = request.POST['candidateEmail'] 
+    titles = request.POST['id']
+    exist = Candidates.objects.filter(email=email_ajax,title_id=titles).exists()
     return JsonResponse({"email_exist":exist})
 
 
@@ -377,7 +390,9 @@ def your_view(request):
 
 def search_voters(request):
     search_query = request.GET.get('search')
-    voters = Voter.objects.filter(f_name__icontains=search_query)
+    title_id = request.GET.get('id')
+    voters = Voter.objects.filter(f_name__icontains=search_query ,title_id=title_id)
+    
     results = []
 
     for voter in voters:
@@ -396,12 +411,37 @@ def search_voters(request):
 
 
 
+def search_votes(request):
+    query = request.GET.get('search')
+    title_id = request.GET.get('id')
+    print(title_id)
+    results = Votes.objects.filter(voter__f_name__icontains=query,title_id=title_id)
+    
+    data = []
+    for vote in results:
+        data.append({
+            'position': vote.position.position,
+            'candidate': vote.candidate.name,
+            'voter': vote.voter.f_name,
+        })
+    
+    return JsonResponse(data, safe=False)
+
+
+
+
+
+
+
+
 
 def search_position(request):
     search_word = request.GET.get('search')
+    title_id = request.GET.get('id')
+    print(title_id)
 
     # Filter positions based on the search word
-    positions = Positions.objects.filter(position__icontains=search_word)
+    positions = Positions.objects.filter(title_id=title_id,position__icontains=search_word)
 
     # Convert positions queryset to a list of dictionaries
     positions_data = [
@@ -410,6 +450,7 @@ def search_position(request):
             'title': position.title.title,  # Access the title attribute of the related model
             'no_votes': position.no_votes,
             'id' : position.id
+            
         }
         for position in positions
     ]
@@ -423,15 +464,17 @@ def search_position(request):
 
 
 def search_candidates(request):
-    search_word = request.GET.get("search")
-    candidates = Candidates.objects.filter(name__icontains=search_word)
+    search_word1 = request.GET.get('search')
+    title_ids = request.GET.get('id')
+    candidatesss = Candidates.objects.filter(name__icontains=search_word1,title_id=title_ids)
     results = []
+    # results=[{'search':search_word1,'id':title_ids}]
 
-    for candidate in candidates:
+    for candidate in candidatesss:
         result = {
             'name': candidate.name,
             'photo_url': candidate.photo.url,
-            'position': candidate.position,
+            'position': candidate.position.position,
             'password': candidate.password,
             'email':candidate.email,
             'id': candidate.id
@@ -443,3 +486,62 @@ def search_candidates(request):
 
 
 
+
+
+# def search_voters(request):
+#     search_query = request.GET.get('search')
+#     title_id = request.GET.get('id')
+#     voters = Voter.objects.filter(f_name__icontains=search_query ,title_id=title_id)
+    
+#     results = []
+
+#     for voter in voters:
+#         result = {
+#             'f_name': voter.f_name,
+#             'l_name': voter.l_name,
+#             'photo_url': voter.photo.url,
+#             'password': voter.password,
+#             'id': voter.id
+#             # Add other fields as needed
+#         }
+#         results.append(result)
+
+#     return JsonResponse(results, safe=False)
+
+
+
+
+
+
+
+def your_views(request):
+    titles = Title.objects.all()  # Replace `Title` with your actual model name
+    active_title = Title.objects.filter(status='active').first()
+    active_index = titles.index(active_title) if active_title else None
+
+    context = {
+        'titles': titles,
+        'activeIndex': active_index,
+    }
+    return render(request, 'school_admin/title.html', context)
+
+
+
+def update_status(request):
+    if request.method == 'POST':
+        index = int(request.POST.get('index'))
+        items = Title.objects.all()
+
+        if 0 <= index < len(items):
+            selected_item = items[index]
+
+            # Set all items to 'non-active'
+            Title.objects.update(status='non-active')
+
+            # Set the selected item to 'active'
+            selected_item.status = 'active'
+            selected_item.save()
+
+            return JsonResponse({'message': 'Status updated successfully.'})
+
+    return JsonResponse({'message': 'Invalid request.'}, status=400)

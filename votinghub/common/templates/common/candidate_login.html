@@ -18,7 +18,7 @@
   <div class="row ">
     <div class="col-md-6 sm-12"><img src="{% static 'images/suit2.png' %}" alt="" class="rounded"></div>
     <div class="col-md-6 sm-12">
-      <form method="POST">
+      <form method="POST" action="">
         {% csrf_token %}
         {{ msg }}
         <div class="form-group mt-5">
@@ -27,7 +27,7 @@
           </label>
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
             placeholder="Enter Your Mail" required name="email">
-          <!-- <small id="emailHelp" class="form-text text-dark">We'll never share your email with anyone else.</small> -->
+          
         </div>
         <br />
         <div class="form-group">

@@ -68,7 +68,14 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button type="button" class="btn reset_btn mt-3" data-bs-dismiss="modal"><i
+                        <button type="button" class="btn reset_btn mt-3" data-bs-dismiss="modal" style="
+                            background-color: #4CAF50;;
+                            color: white;
+                            box-shadow: 0px 0px 10px black;
+                                box-sizing: border-box;
+                            
+                        
+                        "><i
                                 class="fa fa-refresh"></i> reset</button>
                     </div>
 
@@ -79,16 +86,17 @@
                     <div class="col ms-1">
                         show entries
                     </div>
-                    <div class="col">
-                        <form class="example search " action="action_page.php">
-                            <input type="text" placeholder="Search.." name="search">
-                            <button type="submit"><i class="fa fa-search"></i></button>
+                    <div class="col-6">
+                        <form class="example search" action="" id="search-form">
+                            <input type="text" placeholder="Search.." name="search" id="search-input">
+                            <button type="button"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                 </div>
 
             </div>
             <div class="container">
+                <input type="text" name="" value="{{ id.id }}" id="title_id" hidden>
                 <div class="row">
                     <div class="col-md-12  mt-3 ms-3">
                         <table class="table-primary data_table">
@@ -96,17 +104,17 @@
                                 <th>position</th>
                                 <th>candidate</th>
                                 <th>voter</th>
+                                
                             </tr>
+                            {% for vote in votes %}
+          
                             <tr>
-                                <td>chairman</td>
-                                <td>babu</td>
-                                <td>murshi</td>
+                                <td>{{ vote.position.position }}</td>
+                                <td>{{ vote.candidate.name }}</td>
+                                <td>{{ vote.voter.f_name }}</td>
                             </tr>
-                            <tr>
-                                <td>vice chairman</td>
-                                <td>ramu</td>
-                                <td>murshi</td>
-                            </tr>
+                            {% endfor %}
+                           
                         </table>
 
                     </div>
@@ -135,6 +143,54 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+ 
+ $(document).ready(function() {
+    $('#search-input').on('input', function() {
+        var searchInput = $(this).val();
+        const titleId = $('#title_id').val();
+        
+        console.log("Search query:", searchInput); 
+        
+        
+        $.ajax({
+            type: 'GET',
+            url:  "{% url 'school_admin:search_votes'  %}?id = "+ titleId,
+            data: {
+                search: searchInput,
+            id: titleId
+            },
+            success: function(data) {
+                console.log("Search results:", data); 
+                
+                $('.data_table tr:not(:first-child)').remove();
+                
+                if (data.length === 0) {
+                    var noResultsRow = '<tr>' +
+                        '<td colspan="3">No results found</td>' +
+                        '</tr>';
+                    
+                    $('.data_table').append(noResultsRow);
+                } else {
+                    $.each(data, function(index, result) {
+                        var row = '<tr>' +
+                            '<td>' + result.position + '</td>' +
+                            '<td>' + result.candidate + '</td>' +
+                            '<td>' + result.voter + '</td>' +
+                            '</tr>';
+                        
+                        $('.data_table').append(row);
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("AJAX error:", error); 
+            }
+        });
+    });
+});
+</script>
 
 {% endblock %}
 

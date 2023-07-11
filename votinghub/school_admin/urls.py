@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 app_name='school_admin' # for redirection purpose
 
 urlpatterns = [
@@ -24,9 +25,13 @@ urlpatterns = [
     path('update_candidate/<int:c_id>',views.update_candidate,name='update_candidate'),
     path('update_postion/<int:po_id>',views.update_postion,name='update_position'),
     path('search_voters',views.search_voters,name='search_voters'),
+    path('search_votes',views.search_votes,name='search_votes'),
     path('search_position',views.search_position,name='search_position'),
     path('your_view',views.your_view,name='your_view'),
+    path('your_views',views.your_views,name='your_views'),
     path('logout',views.logout,name='logout'),
-    path('search_candidates',views.search_candidates,name='search_candidates')
+    path('search_candidates',views.search_candidates,name='search_candidates'),
+    path('update_status',views.update_status,name='update_status'),
+        
     
 ]

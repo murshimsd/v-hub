@@ -12,7 +12,7 @@ class Candidates(models.Model):
     email = models.CharField(max_length=50)
     title = models.ForeignKey(Title,on_delete=models.CASCADE)
     position = models.ForeignKey(Positions,on_delete=models.CASCADE)
-    platform = models.CharField(max_length=100,default='')
+    platform = models.CharField(max_length=100,default='',null=True)
 
 
     class Meta:
@@ -26,6 +26,8 @@ class Votes(models.Model):
     position = models.ForeignKey(Positions, on_delete=models.CASCADE)
     voter = models.ForeignKey(Voter, on_delete=models.CASCADE)
     candidate = models.ForeignKey(Candidates, on_delete=models.CASCADE)
+    title = models.ForeignKey(Title, on_delete=models.CASCADE,default=0)
+    
     
     
 

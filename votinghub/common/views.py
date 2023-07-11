@@ -64,6 +64,7 @@ def candidate_login(request):
 
         v_email = request.POST['email']
         passwords = request.POST['password']
+        print(passwords+'fghjjjjjjjkkk')
 
         try:
             candidate = Candidates.objects.get(email = v_email , password = passwords )
@@ -75,7 +76,7 @@ def candidate_login(request):
         except :
             msgs = 'incorrect mail or password'
 
-    return render(request,'common/candidate_login.html',{"msg":ms})  
+    return render(request,'common/candidate_login.html',{"msg":msgs})  
 
 
 

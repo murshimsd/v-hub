@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'votinghub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vo_hub',
+        'NAME': 'voo_hub',
         'USER' : 'postgres',
         'PASSWORD' : 'root',
         'HOST' : 'localhost',

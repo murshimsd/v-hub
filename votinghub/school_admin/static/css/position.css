@@ -17,7 +17,9 @@
 .modal_btn{
     background-color: #4CAF50;;
     color: white;
-    border: 1px solid black;
+    box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
+    
     border-radius: 0;
 }
 .modals{

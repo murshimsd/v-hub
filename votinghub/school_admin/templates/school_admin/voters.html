@@ -83,9 +83,11 @@
 
     .modal_btn {
         background-color: #4CAF50;
-        ;
+        box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
+
         color: white;
-        border: 1px solid black;
+
         border-radius: 0;
     }
 
@@ -130,17 +132,21 @@
     }
 
     .table_edit {
-        border: 1px solid black;
+
         color: white;
         background-color: gray;
         border-radius: 0px;
+        box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
     }
 
     .table_delet {
-        border: 1px solid black;
-        background-color: #f44336;
+
+        background-color: red;
         color: white;
         border-radius: 0px;
+        box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
     }
 
     .next_prev {
@@ -165,7 +171,18 @@
         border: 3px solid white;
         border-bottom: 0px;
     }
-   
+
+    .styled-msg {
+        background-color: green;
+        box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
+        color: white;
+        padding: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        height: 50px;
+        width: 100%;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -173,6 +190,21 @@
     <div class="row">
         <div class="col">
             <h3>Voters List</h3>
+            {% if msg %}
+            {% if msg == 'success' %}
+            <div class="alert-success styled-msg">
+                {{ msg }}
+            </div>
+            {% elif msg == 'mail exist' %}
+            <div class="alert-danger styled-msg" style="background-color: red;">
+                {{ msg }}
+            </div>
+            {% else %}
+            <div class="alert styled-msg" role="alert">
+                {{ msg }}
+            </div>
+            {% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -187,7 +219,7 @@
                             data-bs-target="#exampleModal">
                             <i class="fa fa-plus"></i> Add
                         </button>
-                        {{ msg }}
+
 
                         <!-- Modal -->
                         <form action="" id="add" method="POST" enctype="multipart/form-data">
@@ -209,22 +241,27 @@
                                                         <label for="">Title &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select" style="border-radius: 0px;" name="title" id="title">
-                                                            
+                                                        <select class="form-select" style="border-radius: 0px;"
+                                                            name="title" id="title">
+
                                                             <option selected disabled name>Election-Title</option>
-                                                            {% for i in titles %}
-                                                            <option value="1">{{ i.title }}</option>
-                                                            {% endfor %}
-                                                            
+
+                                                            <option value="{{ titles.id }}">{{ titles.title }}</option>
+
+
                                                         </select>
-                                                        
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><span id="s_title"></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td>
                                                         <label for="">First name &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" value="" size="40" name="f_name">
+                                                        <input type="text" value="" size="40" name="f_name" id="f_name">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -232,12 +269,12 @@
                                                     <td><span id="span_f_name"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    
+
                                                     <td>
                                                         <label for="">Last Name &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" value="" size="40" name="l_name">
+                                                        <input type="text" value="" size="40" name="l_name" id="l_name">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -249,7 +286,8 @@
                                                         <label for="">Email &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="email" value="" size="40" name="emails" id="email">
+                                                        <input type="email" value="" size="40" name="emails"
+                                                            id="emails">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -265,14 +303,14 @@
                                                     <td>
                                                         <div class="input-group ">
                                                             <input type="file" class="form-control load_image"
-                                                                id="inputGroupFile04"
-                                                                aria-describedby="inputGroupFileAddon04"
+                                                                id="photo" aria-describedby="inputGroupFileAddon04"
                                                                 aria-label="Upload" style="width: 20px;" name="photo">
 
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr><td></td>
+                                                <tr>
+                                                    <td></td>
                                                     <td><span id="span_photo"></span></td>
                                                 </tr>
 
@@ -319,6 +357,7 @@
 
     <div class="row">
         <div class="col-md-12 mt-5">
+            <p><input type="text" name="" id="title_id" value="{{ titles.id }}" hidden></p>
             <table class="table-primary data_table" border="1">
                 <tr>
                     <th>No</th>
@@ -330,6 +369,9 @@
                 </tr>
                 {% for voter in voters %}
                 <tr>
+                    <td> </td>
+                </tr>
+                <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ voter.f_name }}</td>
                     <td>{{ voter.l_name }}</td>
@@ -337,9 +379,9 @@
                     <td>{{ voter.password }}</td>
                     <td>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-secondary"
-                            style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal2-{{ voter.id }}"><i class="fa fa-edit"></i>
+                        <button type="button" class="btn btn-secondary table_edit" style="box-sizing: border-box; "
+                            data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ voter.id }}"><i
+                                class="fa fa-edit"></i>
                             edit
                         </button>
 
@@ -444,7 +486,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/voters.js' %}"></script>
 <script>
-    $("#email").keyup(function () {
+    $("#emails").keyup(function () {
         $.ajaxSetup({
             headers: {
 
@@ -452,13 +494,16 @@
 
             }
         })
+        var titleId = $('.form-select option:selected').val();
 
         $.ajax({
 
             url: "{% url 'school_admin:check_mail' %}",
             method: 'POST',
             data: {
-                "voterEmail": $(this).val()
+                "voterEmail": $(this).val(),
+                "id": titleId
+
 
             },
             success: function (response) {
@@ -486,18 +531,25 @@
         const $searchInput = $('#search-input');
 
         // Event listener for input change
-        $searchInput.on('input', function () {
+        $searchInput.on('keyup', function () {
             // Get the search query
+            const $searchInput = $('#search-input');
+            console.log($searchInput.val(), 'id');
             const searchQuery = $searchInput.val();
+            const titleId = $('#title_id').val();
+            console.log(titleId, 'title');
             if (searchQuery == "") {
                 location.reload();
             }
 
             // Create and send the AJAX request
             $.ajax({
-                url: "{% url 'school_admin:search_voters' %}",
+                url: "{% url 'school_admin:search_voters'  %}?id = " + titleId,
                 type: 'GET',
-                data: { search: searchQuery },
+                data: {
+                    search: searchQuery,
+                    id: titleId
+                },
                 dataType: 'json',
                 success: function (results) {
                     // Process the results and update the table or perform other actions
@@ -507,57 +559,26 @@
                     const $tableBody = $('.data_table tbody');
                     $tableBody.empty();
 
+                    if (results.length === 0) {
+                        const noDataMessage = '<tr><td colspan="5">No data available</td></tr>';
+                        $tableBody.append(noDataMessage);
+                    } else {
+                        results.forEach(function (voter) {
+                            const url = "http://127.0.0.1:8000/school_admin/remove_voter/" + voter.id;
+                            const $row = $('<tr>');
+                            $row.append('<td>' + voter.f_name + '</td>');
+                            $row.append('<td>' + voter.l_name + '</td>');
+                            $row.append('<td><img src="' + voter.photo_url + '" alt="" style="height: 40px;width: 40px;"></td>');
+                            $row.append('<td>' + voter.password + '</td>');
+                            $row.append('<td><span><a href="' + url + '"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>delete</button></a></span></td>');
 
-                    results.forEach(function (voter) {
-
-                        url = "http://127.0.0.1:8000/school_admin/remove_voter/" + voter.id
-                        const $row = $('<tr>');
-                        $row.append('<td>' + voter.f_name + '</td>');
-                        $row.append('<td>' + voter.l_name + '</td>');
-                        $row.append('<td><img src="' + voter.photo_url + '" alt="" style="height: 40px;width: 40px;"></td>');
-                        $row.append('<td>' + voter.password + '</td>');
-                        $row.append('<td>' +
-                            // '<button type="button" class="btn btn-secondary" style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ voter.id }}"><i class="fa fa-edit"></i>edit</button>' +
-                            // '<div class="modal fade" id="exampleModal2-{{ voter.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
-                            // '<div class="modal-dialog">' +
-                            // '<div class="modal-content mbody">' +
-                            // '<div class="modal-header">' +
-                            // '<h1 class="modal-title fs-5" id="exampleModalLabel" style="margin-left: 15px;">update password</h1>' +
-                            // '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
-                            // '</div>' +
-                            // '<div class="modal-body">' +
-                            // '<table>' +
-                            // '<tr>' +
-                            // '<td><label for="">Name : </label></td>' +
-                            // '<td><span name="namess">' + voter.f_name + '</span><br></td>' +
-                            // '</tr>' +
-                            // '<tr>' +
-                            // '<td><label for="">E-mail : </label></td>' +
-                            // '<td><input type="text" name="e1" value="' + voter.e_mail + '" ></td>' +
-                            // '</tr>' +
-                            // '<tr>' +
-                            // '<td><label for="">Password : </label></td>' +
-                            // '<td><input type="text" name="passwrds" value="' + voter.password + '"></td>' +
-                            // '</tr>' +
-                            // '</table>' +
-                            // '</div>' +
-                            // '<div class="modal-footer">' +
-                            // '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>' +
-                            // '<button type="button" class="btn btn-primary">Save changes</button>' +
-                            // '</div>' +
-                            // '</div>' +
-                            // '</div>' +
-                            // '</div>' +
-                            '<span>' +
-                            '<a href="' + url + '"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>delete</button></a>' +
-                            '</span>' +
-                            '</td>');
-
-                        $tableBody.append($row);
-                    });
+                            $tableBody.append($row);
+                        });
+                    }
                 }
             });
         });
+
     });
 
 
@@ -567,61 +588,55 @@
 
 
 
-    $(document).ready(function() {
-  $('#add').submit(function(event) {
-    event.preventDefault(); // Prevent form submission
-    
-    var f_name = $('input[name="f_name"]').val();
-    var l_name = $('input[name="l_name"]').val();
-    var email = $('input[name="emails"]').val();
-    var photo = $('input[name="photo"]').val();
-    
-    // Reset error messages
-    $('.error').empty();
-    $('input').removeClass('error');
-    
-    // Validate first name
-    if (f_name.length === 0) {
-      $('input[name="f_name"]').addClass('error');
-      $('#span_f_name').text('Please enter first name').css({ "color": "red" });
-    }
-    
-    // Validate last name
-    if (l_name.length === 0) {
-      $('input[name="l_name"]').addClass('error');
-      $('#span_l_name').text('Please enter last name').css({ "color": "red" });
-    }
-    
-    // Validate email
-    if (email.length === 0) {
-      $('input[name="emails"]').addClass('error');
-      $('#span_mail').text('Please enter email');
-    } else if (!validateEmail(email)) {
-      $('input[name="emails"]').addClass('error');
-      $('#span_mail').text('Please enter a valid email address').css({ "color": "red" });
-    }
-    
-    // Validate photo
-    if (photo.length === 0) {
-      $('input[name="photo"]').addClass('error');
-      $('#span_photo').text('Please select a photo').css({ "color": "red" });
-    }
-    
-    // If there are any errors, do not proceed with form submission
-    if ($('.error').length > 0) {
-      return;
-    }
-    
-    // If the form is valid, proceed with form submission
-    this.submit();
-  });
-  
-  // Email validation function
-  function validateEmail(email) {
-    var emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return emailPattern.test(email);
-  }
-});
+    $(document).ready(function () {
+        $('#add').submit(function (event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Clear previous error messages
+            $('.error').empty();
+
+            // Retrieve form values
+            var title = $('#title').val();
+            var f_name = $('#f_name').val();
+            var l_name = $('#l_name').val();
+            var photo = $('#photo').val();
+            var email = $('#emails').val();
+
+            var isValid = true; // Track form validation
+
+            // Validate title field
+            if (!title) {
+                $('#s_title').text('Please select a title.').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
+
+            // Validate position field
+            if (!f_name) {
+                $('#span_f_name').text('Please enter a first name .').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
+
+            if (!l_name) {
+                $('#span_l_name').text('Please enter a last name .').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
+            if (!email) {
+                $('#span_mail').text('Please enter e-mail address.').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
+            if (!photo) {
+                $('#span_photo').text('Please add your photo.').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
+
+
+            if (isValid) {
+                // Form is valid, perform form submission
+                this.submit();
+            }
+        });
+    });
+
 
 </script>
 

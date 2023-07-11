@@ -4,149 +4,162 @@
 {% block title %}voter{% endblock %}
 
 {% block header %}
-<link rel="stylesheet" href="{% static 'css/vote.css' %}">
-<style>
-</style>
+    <link rel="stylesheet" href="{% static 'css/vote.css' %}">
+    <style>
+    </style>
 {% endblock %}
 
 {% block content %}
-<div class="container mb-3">
-    <div class="row election">
-        <div class="col">
-            <h1>calicut university election - 2022</h1>
+    <div class="container mb-3">
+        <div class="row election">
+            <div class="col">
+                <h1>calicut university election - 2022</h1>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container vote">
-
-    <div class="row ">
-        <div class="col bg-light ">
-            <form method="POST" >
-                {% csrf_token %}
-                {% for position, candidates in position_candidates.items %}
-                
-                <ul class="list-group vote_form">
-                    <li class="list-group  position">
-                        <div class="row">
-                            <div class="col-10 mt-3 mb-3">
-                                <h2>{{ position.position }}</h2>
-                            </div>
-                            <div class="col-2">
-                                <input class="btn reset mb-3 mt-3 resets" type="reset" value="Reset">
-                            </div>
-                        </div>
-                    </li>
-                    {% for candidate in candidates %}
-                    <li class="list-group-item">
-                        <div class="container text-center">
-                            <div class="row">
-                                <div class="col-2">
-                                    <input class="form-check-input me-1 radios" type="radio"
-                                        name="{{ position.position }}" value="{{ candidate.id }}">
-                                    <label class="form-check-label" for="firstRadio">
-                                        <!-- Button trigger modal -->
-                                    </label>
+    <div class="container vote">
+        <div class="row ">
+            <div class="col bg-light ">
+                <form method="POST" id="voting-form">
+                    {% csrf_token %}
+                    {% for position, candidates in position_candidates.items %}
+                        <ul class="list-group vote_form">
+                            <li class="list-group  position">
+                                <div class="row">
+                                    <div class="col-10 mt-3 mb-3">
+                                        <h2>{{ position.position }}</h2>
+                                    </div>
+                                    <div class="col-2">
+                                        <input class="btn reset mb-3 mt-3 resets" type="reset" value="Reset">
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <button type="button" class="btn platform" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal-{{ candidate.id }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                        </svg>
-                                        platform
-                                    </button>
+                            </li>
+                            {% for candidate in candidates %}
+                                <li class="list-group-item">
+                                    <div class="container text-center">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <input class="form-check-input me-1 radios" type="radio"
+                                                       name="{{ position.position }}" value="{{ candidate.id }}">
+                                                <label class="form-check-label" for="firstRadio">
+                                                    <!-- Button trigger modal -->
+                                                </label>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn platform" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal-{{ candidate.id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-search"
+                                                         viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                                    </svg>
+                                                    platform
+                                                </button>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal-{{ candidate.id }}" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">hello friends
-                                                    </h1>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal-{{ candidate.id }}"
+                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5"
+                                                                    id="exampleModalLabel">Candidate Platform</h1>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ candidate.platform }}
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    {{ candidate.platform }}
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <img src="{{ candidate.photo.url }}" alt="" class="image">
+                                            </div>
+                                            <div class="col-5 name">
+                                                <h3>
+                                                    {{ candidate.name }}
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-3">
-                                    <img src="{{ candidate.photo.url }}" alt="" class="image">
-                                </div>
-                                <div class="col-5 name">
-                                    <h3>
-                                        {{ candidate.name }}
-                                    </h3>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <br><br>
+                    {% endfor %}
+                    <div class="div submit text-center mb-3 mt-3">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary view" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" id="viewBallotBtn" onclick="viewBallot()">
+                            View Ballot
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Your Selections</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="modalSelections">
+                                            <!-- Selected choices will be displayed here -->
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </li>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
                     {% endfor %}
-                </ul>
-                <br><br>
-                {% endfor %}
-                <div class="div submit text-center mb-3 mt-3">
-                    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    View-ballot
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Your Are Selected</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div id="modalSelections">
-                <!-- Selected choices will be displayed here -->
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
                 </div>
-            </form>
-        </div>
-    </div>
-    <br>
-</div>
-
-{% if messages %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
             </div>
-            {% endfor %}
         </div>
-    </div>
-</div>
-{% endif %}
-
+    {% endif %}
 
 {% endblock %}
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"
+        integrity="sha512-..."
+        crossorigin="anonymous"></script>
+
+
+<script>
+  
+    
+</script>
 
 
 

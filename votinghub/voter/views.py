@@ -3,11 +3,13 @@ from django.shortcuts import render , redirect
 from school_admin.views import candidates
 from .models import Voter
 from django.contrib import messages
-from school_admin.models import Positions
+from school_admin.models import Positions , Title
 from candidate.models import Candidates , Votes
 
 
 def vote(request):
+    titles=Title.objects.get(status='active')
+    title_ids = Title.objects.get(id=titles.id)
     voter = Voter.objects.get(id=request.session.get('voter'))
     positions = Positions.objects.filter(title_id=voter.title_id)
     candidates = Candidates.objects.all()
@@ -27,7 +29,8 @@ def vote(request):
                 voting = Votes(
                     voter_id=voter_id,
                     candidate_id=candidate_id,
-                    position_id=position.id
+                    position_id=position.id,
+                    title_id=title_ids.id
                 )
                 voting.save()
             except Exception as e:
@@ -44,38 +47,6 @@ def vote(request):
 
 
 
-# def vote(request):
-#     voter = Voter.objects.get(id=request.session.get('voter'))
-#     positions = Positions.objects.filter(title_id=voter.title_id)
-#     candidates = Candidates.objects.all()
-
-#     if request.method == 'POST':
-#         voter_id = request.session.get('voter')
-#         for position in positions:
-#             try:
-#                 candidate_id = request.POST[position.position]
-#                 if not candidate_id:
-#                     raise Exception("You have skipped a position.")
-
-#                 voting = Votes(
-#                     voter_id=voter_id,
-#                     candidate_id=candidate_id,
-#                     position_id=position.id
-#                 )
-#                 voting.save()
-#             except Exception as e:
-#                 messages.error(request, str("you have skipped position "))
-#                 return redirect('voter:vote')
-
-#         # Redirect the user to the success page after successful voting
-#         return redirect('voter:thanks')
-
-#     position_candidates = {}
-#     for position in positions:
-#         candidates = Candidates.objects.filter(position=position, title_id=voter.title_id)
-#         position_candidates[position] = candidates
-
-#     return render(request, 'voter/vote.html', {"position_candidates": position_candidates})
 
 
 

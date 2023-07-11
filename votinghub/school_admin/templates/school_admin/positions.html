@@ -4,59 +4,84 @@
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/position.css' %}">
 <style>
+    .modal_btn{
+    background-color: #4CAF50;;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
+    
+    border-radius: 0;
+}
     .image {
         height: 60px;
         width: 60px;
         /* margin-top: 10px; */
         opacity: 0.5;
     }
+
     .data_table {
-    width: 900px;
-    border-spacing: 10px;
-    border: none; 
-    box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2); 
-  }
-  
-  .data_table th,
-  .data_table td {
-    font-family: 'Times New Roman', Times, serif;
-    padding: 10px; 
-  }
-  .data_table td {
-    font-size: 18px;
-  }
-  .data_table th{
-    font-size: 18px;
-  }
-  
-  .table_edit,
-  .table_delet {
-    border: none; 
-    color: white;
-    background-color: gray;
-    border-radius: 0;
-    padding: 5px 10px; 
-  }
-  
-  .table_delet {
-    background-color: #f44336;
-  }
-  
-  .next_prev {
-    display: flex;
-    justify-content: flex-end; 
-    margin-top: 20px;
-  }
-  
-  .next_prev a {
-    text-decoration: none;
-    color: black;
-    background-color: #008CBA;
-    border-radius: 2px;
-    border: none; 
-    padding: 5px 10px; 
-    font-size: 14px;
-  }
+        width: 900px;
+        border-spacing: 10px;
+        border: none;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+    }
+
+    .data_table th,
+    .data_table td {
+        font-family: 'Times New Roman', Times, serif;
+        padding: 10px;
+    }
+
+    .data_table td {
+        font-size: 18px;
+    }
+
+    .data_table th {
+        font-size: 18px;
+    }
+
+    .table_edit,
+    .table_delet {
+        border: none;
+        color: white;
+        background-color: gray;
+        border-radius: 0;
+        padding: 5px 10px;
+        box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
+    }
+
+    .table_delet {
+        background-color: #f44336;
+    }
+
+    .next_prev {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .next_prev a {
+        text-decoration: none;
+        color: black;
+        background-color: #008CBA;
+        border-radius: 2px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .styled-msg {
+        background-color: green;
+        box-shadow: 0px 0px 10px black;
+        box-sizing: border-box;
+        color: white;
+        padding: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        height: 50px;
+        width: 100%;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -64,7 +89,21 @@
     <div class="row">
         <div class="col">
             <h3>Positions</h3>
+            {% if msg %}
+    {% if msg == 'success' %}
+        <div class="alert-success styled-msg" >
             {{ msg }}
+        </div>
+    {% elif msg == 'already exist' %}
+        <div class="alert-danger styled-msg"  style="background-color: red;">
+            {{ msg }}
+        </div>
+    {% else %}
+        <div class="alert styled-msg" role="alert">
+            {{ msg }}
+        </div>
+    {% endif %}
+{% endif %}
         </div>
     </div>
 </div>
@@ -99,15 +138,16 @@
                                                         <label for="">Title &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select" style="border-radius: 0px;" name="title" id="title">
-                                                            
+                                                        <select class="form-select" style="border-radius: 0px;"
+                                                            name="title" id="title">
+
                                                             <option selected disabled name>Election-Title</option>
-                                                            {% for i in titles %}
-                                                            <option value="1">{{ i.title }}</option>
-                                                            {% endfor %}
                                                             
+                                                            <option value="{{ titles.id }}">{{ titles.title }}</option>
+                                                            
+
                                                         </select>
-                                                        
+
                                                 </tr>
                                                 <tr>
                                                     <td></td>
@@ -118,10 +158,11 @@
                                                         <label for="">Position&nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" value="" size="40" name="position" id="position">
+                                                        <input type="text" value="" size="40" name="position"
+                                                            id="position">
                                                     </td>
-                                                   
-                                                    
+
+
                                                 </tr>
                                                 <tr>
                                                     <td></td>
@@ -132,9 +173,10 @@
                                                         <label for="">No : Of Votes &nbsp; &nbsp; </label>
                                                     </td>
                                                     <td>
-                                                        <input type="number" value="" size="40" name="no_votes" id="votes">
+                                                        <input type="number" value="" size="40" name="no_votes"
+                                                            id="votes">
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                     <td></td>
@@ -147,12 +189,12 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn modal_close" data-bs-dismiss="modal"><i
                                                         class="fa fa-close"></i> Close</button>
-                                                <button type="submit" class="btn modal_save" ><i
-                                                        class="fa fa-save" ></i>save</button>
+                                                <button type="submit" class="btn modal_save"><i
+                                                        class="fa fa-save"></i>save</button>
                                             </div>
                                         </form>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -177,8 +219,9 @@
                 </div>
 
             </div>
+            <input type="text" name="" id="title_id"  value="{{ titles.id }}" hidden>
             <div class="container text-center">
-                
+
                 <div class="row">
                     <div class="col-md-12 mt-5">
                         <table class="table-primary data_table" border="1">
@@ -190,76 +233,82 @@
                                 <th>Tools</th>
                             </tr>
                             {% for i in positions %}
+                            
+                                 
+                            
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ i.position }}</td>
                                 <td>{{ i.title.title }}</td>
-                                <td> {{ i.no_votes  }}</td>
-        
+                                <td> {{ i.no_votes }}</td>
+
 
                                 <td>
-                                    <button type="button" class="btn btn-secondary"
-                                    style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal2-{{ i.id }}"><i class="fa fa-edit"></i>
-                                    edit
-                                </button>
+                                    <button type="button" class="btn btn-secondary table_edit"
+                                        style="box-sizing: border-box; " data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal2-{{ i.id }}"><i class="fa fa-edit"></i>
+                                        edit
+                                    </button>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal2-{{ i.id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content mbody">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel"
-                                                    style="margin-left: 15px;">update position</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal2-{{ i.id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content mbody">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"
+                                                        style="margin-left: 15px;">update position</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{% url 'school_admin:update_position' i.id %}"
+                                                        method="POST">
+                                                        {% csrf_token %}
+                                                        <table>
+
+                                                            <tr>
+                                                                <td><label for="">Position : </label></td>
+                                                                <td><span name="namess">{{ i.position }}</span><br></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <label for="">No of votes : </label>
+                                                                </td>
+                                                                <td><input type="number" name="number"
+                                                                        value="{{ i.no_votes }}"></td>
+                                                            </tr>
+                                                        </table>
+                                                       
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                changes</button>
+                                                        </div>
+
+
+                                                    </form>
+                                                </div>
+
                                             </div>
-                                            <div class="modal-body">
-                                                <form action="{% url 'school_admin:update_position' i.id %}"
-                                                    method="POST">
-                                                    {% csrf_token %}
-                                                    <table>
-
-                                                        <tr>
-                                                            <td><label for="">Position : </label></td>
-                                                            <td><span name="namess">{{ i.position }}</span><br></td>
-                                                        </tr>
-                                                        
-                                                        <tr>
-                                                            <td>
-                                                                <label for="">No of votes : </label>
-                                                            </td>
-                                                            <td><input type="number" name="number"
-                                                                    value="{{ i.no_votes }}"></td>
-                                                        </tr>
-                                                    </table>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                                    </div>
 
 
-                                                </form>
-                                            </div>
-                                           
+
                                         </div>
-
-
-
                                     </div>
-                                </div>
                                     <span>
-                                        <a href="{% url 'school_admin:remove_position' i.id %}"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i
-                                                class="fa fa-trash"></i> delet</button></a>
+                                        <a href="{% url 'school_admin:remove_position' i.id %}"><button type="button"
+                                                class="btn table_delet" data-bs-dismiss="modal"><i
+                                                    class="fa fa-trash"></i> delet</button></a>
                                     </span>
                                 </td>
 
                             </tr>
                             {% endfor %}
-                          
+
                         </table>
                     </div>
                 </div>
@@ -281,15 +330,16 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="{% static 'js/position.js' %}"></script>
 <script>
-     $(document).ready(function() {
-        $('#position').on('blur', function() {
+    $(document).ready(function () {
+        $('#position').on('blur', function () {
             var position = $(this).val();
-            var titleId = $('#title').val();
+            var titleId = $('#title_id').val();
 
             if (position && titleId) {
                 $.ajax({
@@ -299,9 +349,9 @@
                         'position': position,
                         'title_id': titleId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (!response.valid) {
-                            $('#s_position').text(response.message).css({"color":"red"});
+                            $('#s_position').text(response.message).css({ "color": "red" });
                         } else {
                             $('#s_position').empty();
                         }
@@ -318,130 +368,100 @@
 
 
 
-    $(document).ready(function() {
-    $('#myForm').submit(function(event) {
-        event.preventDefault(); // Prevent the form from submitting
+    $(document).ready(function () {
+        $('#myForm').submit(function (event) {
+            event.preventDefault(); // Prevent the form from submitting
 
-        // Clear previous error messages
-        $('.error').empty();
+            // Clear previous error messages
+            $('.error').empty();
 
-        // Retrieve form values
-        var title = $('#title').val();
-        var position = $('#position').val();
-        var votes = $('#votes').val();
+            // Retrieve form values
+            var title = $('#title').val();
+            var position = $('#position').val();
+            var votes = $('#votes').val();
 
-        var isValid = true; // Track form validation
+            var isValid = true; // Track form validation
 
-        // Validate title field
-        if (!title) {
-            $('#s_title').text('Please select a title.').addClass('error').css({"color":"red"});
-            isValid = false;
-        }
-
-        // Validate position field
-        if (!position) {
-            $('#s_position').text('Please enter a position.').addClass('error').css({"color":"red"});
-            isValid = false;
-        }
-
-        // Validate votes field
-        if (!votes) {
-            $('#s_vote').text('Please enter the number of votes.').addClass('error').css({"color":"red"});
-            isValid = false;
-        } else if (votes < 0) {
-            $('#s_vote').text('Number of votes must be a positive value.').addClass('error').css({"color":"red"});
-            isValid = false;
-        }
-
-        if (isValid) {
-            // Form is valid, perform form submission
-            this.submit();
-        }
-    });
-});
-
-
-
-
-
-$(document).ready(function () {
-        // Get the search input element
-        const $searchInput = $('#search-input');
-
-        // Event listener for input change
-        $searchInput.on('input', function () {
-            // Get the search query
-            const searchQuery = $searchInput.val();
-            if (searchQuery == "") {
-                location.reload();
+            // Validate title field
+            if (!title) {
+                $('#s_title').text('Please select a title.').addClass('error').css({ "color": "red" });
+                isValid = false;
             }
 
-            // Create and send the AJAX request
-            $.ajax({
-                url: "{% url 'school_admin:search_position' %}",
-                type: 'GET',
-                data: { search: searchQuery },
-                dataType: 'json',
-                success: function (results) {
-                    // Process the results and update the table or perform other actions
-                    console.log(results);
+            // Validate position field
+            if (!position) {
+                $('#s_position').text('Please enter a position.').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
 
-                    // Example: Update the table with search results
-                    const $tableBody = $('.data_table tbody');
-                    $tableBody.empty();
+            // Validate votes field
+            if (!votes) {
+                $('#s_vote').text('Please enter the number of votes.').addClass('error').css({ "color": "red" });
+                isValid = false;
+            } else if (votes < 0) {
+                $('#s_vote').text('Number of votes must be a positive value.').addClass('error').css({ "color": "red" });
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Form is valid, perform form submission
+                this.submit();
+            }
+        });
+    });
 
 
+
+
+
+    $(document).ready(function () {
+    // Get the search input element
+    const $searchInput = $('#search-input');
+
+    // Event listener for input change
+    $searchInput.on('input', function () {
+        // Get the search query
+        const searchQuery = $searchInput.val();
+        const titleId = $('#title_id').val();
+        if (searchQuery == "") {
+            location.reload();
+        }
+
+        // Create and send the AJAX request
+        $.ajax({
+            url: "{% url 'school_admin:search_position' %}",
+            type: 'GET',
+            data: { search: searchQuery , id : titleId },
+            
+            dataType: 'json',
+            success: function (results) {
+                // Process the results and update the table or perform other actions
+                console.log(results);
+                
+
+                // Example: Update the table with search results
+                const $tableBody = $('.data_table tbody');
+                $tableBody.empty();
+
+                if (results.length === 0) {
+                    const noDataMessage = '<tr><td colspan="4">No data available</td></tr>';
+                    $tableBody.append(noDataMessage);
+                } else {
                     results.forEach(function (position) {
-
-                         url = "http://127.0.0.1:8000/school_admin/remove_position/" + position.id
+                        const url = "http://127.0.0.1:8000/school_admin/remove_position/" + position.id;
                         const $row = $('<tr>');
                         $row.append('<td>' + position.position + '</td>');
                         $row.append('<td>' + position.title + '</td>');
                         $row.append('<td>' + position.no_votes + '</td>');
-                        $row.append('<td>' +
-                            // '<button type="button" class="btn btn-secondary" style="box-sizing: border-box; border: 1px solid black;" data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ voter.id }}"><i class="fa fa-edit"></i>edit</button>' +
-                            // '<div class="modal fade" id="exampleModal2-{{ voter.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
-                            // '<div class="modal-dialog">' +
-                            // '<div class="modal-content mbody">' +
-                            // '<div class="modal-header">' +
-                            // '<h1 class="modal-title fs-5" id="exampleModalLabel" style="margin-left: 15px;">update password</h1>' +
-                            // '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
-                            // '</div>' +
-                            // '<div class="modal-body">' +
-                            // '<table>' +
-                            // '<tr>' +
-                            // '<td><label for="">Name : </label></td>' +
-                            // '<td><span name="namess">' + voter.f_name + '</span><br></td>' +
-                            // '</tr>' +
-                            // '<tr>' +
-                            // '<td><label for="">E-mail : </label></td>' +
-                            // '<td><input type="text" name="e1" value="' + voter.e_mail + '" ></td>' +
-                            // '</tr>' +
-                            // '<tr>' +
-                            // '<td><label for="">Password : </label></td>' +
-                            // '<td><input type="text" name="passwrds" value="' + voter.password + '"></td>' +
-                            // '</tr>' +
-                            // '</table>' +
-                            // '</div>' +
-                            // '<div class="modal-footer">' +
-                            // '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>' +
-                            // '<button type="button" class="btn btn-primary">Save changes</button>' +
-                            // '</div>' +
-                            // '</div>' +
-                            // '</div>' +
-                            // '</div>' +
-                            '<span>' +
-                            '<a href="' + url + '"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>delete</button></a>' +
-                            '</span>' +
-                            '</td>');
+                        $row.append('<td><span><a href="' + url + '"><button type="button" class="btn table_delet" data-bs-dismiss="modal"><i class="fa fa-trash"></i>delete</button></a></span></td>');
 
                         $tableBody.append($row);
                     });
                 }
-            });
+            }
         });
     });
-
+});
 
 </script>
 {% endblock %}

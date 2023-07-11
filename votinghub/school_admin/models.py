@@ -1,4 +1,6 @@
+import datetime
 from django.db import models
+from datetime import date
 
 # from voter.models import Voter
 
@@ -17,10 +19,12 @@ class Admin (models.Model) :
 
 
 
-
+def default_date():
+    return date(2023, 7, 5)
 class Title(models.Model):
     title = models.CharField(max_length=500)
-    date = models.DateField(default='2023-06-23')
+    date = models.DateField(default=default_date)
+    status = models.CharField(max_length=50,default='non-active')
 
     class Meta :
         db_table = 'title_tb'
