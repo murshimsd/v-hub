@@ -10,6 +10,7 @@ urlpatterns = [
     path('home',views.home,name='home'),
     path('voters',views.voters,name='voters'),
     path('positions',views.positions,name='positions'),
+    path('result',views.result,name='result'),
     path('title',views.title,name='title'),
     path('candidates',views.candidates,name='candidates'),
     path('ballot_position',views.ballot_position,name='ballot_position'),
@@ -32,6 +33,10 @@ urlpatterns = [
     path('logout',views.logout,name='logout'),
     path('search_candidates',views.search_candidates,name='search_candidates'),
     path('update_status',views.update_status,name='update_status'),
+    path('election_results',views.election_results,name='election_results'),
+   
+
+
         
     
 ]

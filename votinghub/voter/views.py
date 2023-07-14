@@ -5,6 +5,7 @@ from .models import Voter
 from django.contrib import messages
 from school_admin.models import Positions , Title
 from candidate.models import Candidates , Votes
+from django.db.models import Count
 
 
 def vote(request):
@@ -70,7 +71,28 @@ def profile(request):
 
 
 def view_vote(request):
-    return render(request,'voter/view_vote.html')
+
+    aaa = Title.objects.get(status='active')
+    positions = Positions.objects.filter(title_id=aaa.id)
+
+
+
+    # Prepare the results data for each position
+    results = []
+    for position in positions:
+        candidates = Candidates.objects.filter(position_id=position.id)
+        candidate_results = (
+            Votes.objects.filter(position_id=position.id)
+            .values('candidate', 'candidate__name')  
+            .annotate(vote_count=Count('candidate'))
+            .order_by('-vote_count')
+        )
+
+        winner = candidate_results.first() if candidate_results else None
+        print(winner)
+        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
+        
+    return render(request, 'voter/view_vote.html', {'results': results,"title_name":aaa})
 
 
 

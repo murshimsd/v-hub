@@ -8,6 +8,9 @@ from .models import Title , Positions
 from django.db.models import F,Q
 from django.core.cache import cache
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
+from django.db.models import Count, F, Max
+
 
 import random
 from django.conf import settings
@@ -18,6 +21,56 @@ from django.conf import settings
 
 def master(request):
     return render(request,'school_admin/master.html')
+
+
+# def result(request):
+#     positions = Positions.objects.filter(title_id=2)
+
+#     results1=[]
+#     results = []
+#     result_array=[]
+#     for position in positions:
+#         candidates = Candidates.objects.filter(position_id=position.id)
+#         candidate_results = Votes.objects.filter(position_id=position.id).values('candidate').annotate(vote_count=Count('candidate')).order_by('-vote_count')
+        
+
+        
+#         for candidate_result in candidate_results:
+#             candidate = Candidates.objects.get(pk=candidate_result['candidate'])
+#             vote_count = candidate_result['vote_count']
+#             result_array.append({'candidate': candidate, 'vote_count': vote_count})
+
+
+
+#         winner = candidate_results.first() if candidate_results else None
+#         results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
+    
+#     return render(request, 'school_admin/result.html', {'results': results})
+
+def result(request):
+    # Retrieve all positions for the election
+    aaa = Title.objects.get(status='active')
+    positions = Positions.objects.filter(title_id=aaa.id)
+
+    # Prepare the results data for each position
+    results = []
+    for position in positions:
+        candidates = Candidates.objects.filter(position_id=position.id)
+        candidate_results = (
+            Votes.objects.filter(position_id=position.id)
+            .values('candidate', 'candidate__name')  # Include candidate's name
+            .annotate(vote_count=Count('candidate'))
+            .order_by('-vote_count')
+        )
+
+        winner = candidate_results.first() if candidate_results else None
+        print(winner)
+        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
+        # print(results)
+
+
+    return render(request, 'school_admin/result.html', {'results': results,"title_name":aaa})
+  
 
 
 
@@ -536,7 +589,7 @@ def update_status(request):
             selected_item = items[index]
 
             # Set all items to 'non-active'
-            Title.objects.update(status='non-active')
+            Title.objects.exclude(pk=selected_item.pk).update(status='non-active')
 
             # Set the selected item to 'active'
             selected_item.status = 'active'
@@ -545,3 +598,20 @@ def update_status(request):
             return JsonResponse({'message': 'Status updated successfully.'})
 
     return JsonResponse({'message': 'Invalid request.'}, status=400)
+
+
+
+
+
+def election_results(request):
+    positions = Positions.objects.filter(title_id=2)
+
+    
+    results = []
+    for position in positions:
+        candidates = Candidates.objects.filter(position_id=position.id)
+        candidate_results = Votes.objects.filter(position_id=position.id).values('candidate').annotate(vote_count=Count('candidate')).order_by('-vote_count')
+        winner = candidate_results.first() if candidate_results else None
+        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
+    print(results,'lll')
+    return render(request, 'school_admin/result.html', {'results': results})
