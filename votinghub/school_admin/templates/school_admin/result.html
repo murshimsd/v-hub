@@ -51,10 +51,17 @@ th{
                 </tr>
                
                 {% endfor %}
+                {% if result.winners %}
                 <tr class="winner">
-                    <td> winner :</td>
-                    <td>{{result.winner.candidate__name }}</td>
+                    <td>Winner(s):</td>
+                    <td>
+                        {% for winner in result.winners %}
+                            {{ winner.candidate__name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                 </tr>
+            {% endif %}
+    
                 
             </table>
             <br>

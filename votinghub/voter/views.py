@@ -21,23 +21,29 @@ def vote(request):
 
     if request.method == 'POST':
         voter_id = request.session.get('voter')
+        has_selection = False  # Variable to check if at least one candidate is selected
+
         for position in positions:
             try:
-                candidate_id = request.POST[position.position]
-                if not candidate_id:
-                    raise Exception("You have skipped a position.")
-
-                voting = Votes(
-                    voter_id=voter_id,
-                    candidate_id=candidate_id,
-                    position_id=position.id,
-                    title_id=title_ids.id
-                )
-                voting.save()
+                candidate_id = request.POST.get(position.position)
+                if candidate_id:
+                    has_selection = True  # Set has_selection to True if a candidate is selected
+                    voting = Votes(
+                        voter_id=voter_id,
+                        candidate_id=candidate_id,
+                        position_id=position.id,
+                        title_id=title_ids.id  # Update this with the appropriate title_id
+                    )
+                    voting.save()
             except Exception as e:
                 messages.error(request, str("skipped"))
                 return redirect('voter:vote')
-        return redirect('voter:thanks')
+
+        if has_selection:
+            return redirect('voter:thanks')
+        else:
+            messages.error(request, "You have not selected any candidates.")
+            return redirect('voter:vote')
 
     position_candidates = {}
     for position in positions:
@@ -71,11 +77,13 @@ def profile(request):
 
 
 def view_vote(request):
-
-    aaa = Title.objects.get(status='active')
-    positions = Positions.objects.filter(title_id=aaa.id)
-
-
+    voter = Voter.objects.get(id=request.session['voter'])
+    try:
+        aaa = Title.objects.get(result='published', id=voter.title_id)
+        positions = Positions.objects.filter(title_id=aaa.id)
+    except Title.DoesNotExist:
+        aaa = None
+        positions = []
 
     # Prepare the results data for each position
     results = []
@@ -88,11 +96,13 @@ def view_vote(request):
             .order_by('-vote_count')
         )
 
-        winner = candidate_results.first() if candidate_results else None
-        print(winner)
-        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
+        max_vote_count = candidate_results.first()['vote_count'] if candidate_results else 0
         
-    return render(request, 'voter/view_vote.html', {'results': results,"title_name":aaa})
+        # Get all candidates with the maximum vote count as winners
+        winners = [candidate for candidate in candidate_results if candidate['vote_count'] == max_vote_count]
+        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winners': winners})
+        
+    return render(request, 'voter/view_vote.html', {'results': results, 'title_name': aaa})
 
 
 
@@ -127,3 +137,6 @@ def logout(request) :
     del request.session['voter']
     request.session.flush()
     return redirect('common:home')
+
+
+

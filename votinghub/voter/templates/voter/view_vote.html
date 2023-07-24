@@ -4,25 +4,28 @@
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/dash_board.css' %}">
 <style>
-table{
-    
-    width: 600px;
+    table {
+        width: 600px;
         border-spacing: 10px;
         border: none;
         box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
         margin-left: 200px;
-}
-td,th,h4{
-    font-family: 'Times New Roman', Times, serif;
-        padding: 10px;
-}
-th{
-    background-color: #d6dce3;
-}
-.winner{
-    background-color: #d6dce3; 
-}
+    }
 
+    td,
+    th,
+    h4 {
+        font-family: 'Times New Roman', Times, serif;
+        padding: 10px;
+    }
+
+    th {
+        background-color: #d6dce3;
+    }
+
+    .winner {
+        background-color: #d6dce3;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -31,9 +34,8 @@ th{
     <div class="row">
         <div class="col">
 
-
-
-            <h1 style="margin-left: 250px; margin-top: 10px;">{{title_name.title }}</h1>
+            {% if title_name %}
+            <h1 style="margin-left: 250px; margin-top: 10px;">{{ title_name.title }}</h1>
             <br>
 
             {% for result in results %}
@@ -47,28 +49,27 @@ th{
                 <tr>
                     <td>{{ cr.candidate__name }}</td>
                     <td>{{cr.vote_count}}</td>
-                    
                 </tr>
-               
                 {% endfor %}
+                {% if result.winners %}
                 <tr class="winner">
-                    <td> winner :</td>
-                    <td>{{result.winner.candidate__name }}</td>
+                    <td>Winner(s):</td>
+                    <td>
+                        {% for winner in result.winners %}
+                            {{ winner.candidate__name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                 </tr>
-                
+            {% endif %}
             </table>
             <br>
             <br>
-           
             {% endfor %}
-
-
-
-
+            {% else %}
+            <h1 style="margin-left: 250px; margin-top: 10px;" >Result is not published yet</h1>
+            {% endif %}
 
         </div>
     </div>
 </div>
-
-
 {% endblock %}

@@ -33,7 +33,8 @@ urlpatterns = [
     path('logout',views.logout,name='logout'),
     path('search_candidates',views.search_candidates,name='search_candidates'),
     path('update_status',views.update_status,name='update_status'),
-    path('election_results',views.election_results,name='election_results'),
+    path('toggle_result/<int:title_id>/',views. toggle_result, name='toggle_result'),
+    
    
 
 

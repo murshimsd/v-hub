@@ -4,53 +4,75 @@
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/votes.css' %}">
 <style>
-         .data_table {
-    width: 900px;
-    border-spacing: 10px;
-    border: none; 
-    box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2); 
-  }
-  
-  .data_table th,
-  .data_table td {
-    font-family: 'Times New Roman', Times, serif;
-    padding: 10px; 
-  }
-  .data_table td {
-    font-size: 18px;
-  }
-  .data_table th{
-    font-size: 18px;
-  }
-  
-  .table_edit,
-  .table_delet {
-    border: none; 
-    color: white;
-    background-color: gray;
-    border-radius: 0;
-    padding: 5px 10px; 
-  }
-  
-  .table_delet {
-    background-color: #f44336;
-  }
-  
-  .next_prev {
-    display: flex;
-    justify-content: flex-end; 
-    margin-top: 20px;
-  }
-  
-  .next_prev a {
-    text-decoration: none;
-    color: black;
-    background-color: #008CBA;
-    border-radius: 2px;
-    border: none; 
-    padding: 5px 10px; 
-    font-size: 14px;
-  }
+    .data_table {
+        width: 900px;
+        border-spacing: 10px;
+        border: none;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+    }
+
+    .data_table th,
+    .data_table td {
+        font-family: 'Times New Roman', Times, serif;
+        padding: 10px;
+    }
+
+    .data_table td {
+        font-size: 18px;
+    }
+
+    .data_table th {
+        font-size: 18px;
+    }
+
+    .table_edit,
+    .table_delet {
+        border: none;
+        color: white;
+        background-color: gray;
+        border-radius: 0;
+        padding: 5px 10px;
+    }
+
+    .table_delet {
+        background-color: #f44336;
+    }
+
+    .next_prev {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        color: white;
+    }
+
+    .next_prev a {
+        text-decoration: none;
+        color: white;
+        background-color: gray;
+        border-radius: 2px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .pagination-link {
+        text-decoration: none;
+        color: gray;
+        margin-right: 5px;
+
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        box-sizing: border-box;
+    }
+
+    .current_page {
+        color: black;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        box-sizing: border-box;
+        border-radius: 0;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -73,10 +95,10 @@
                             color: white;
                             box-shadow: 0px 0px 10px black;
                                 box-sizing: border-box;
+                                border: none;
                             
                         
-                        "><i
-                                class="fa fa-refresh"></i> reset</button>
+                        " onclick="reset()"><i class="fa fa-refresh"></i> reset</button>
                     </div>
 
                 </div>
@@ -84,7 +106,7 @@
             <div class="container ">
                 <div class="row mt-3">
                     <div class="col ms-1">
-                        show entries
+                        
                     </div>
                     <div class="col-6">
                         <form class="example search" action="" id="search-form">
@@ -104,95 +126,112 @@
                                 <th>position</th>
                                 <th>candidate</th>
                                 <th>voter</th>
-                                
+
                             </tr>
-                            {% for vote in votes %}
-          
+                            {% for vote in page_obj %}
+
                             <tr>
                                 <td>{{ vote.position.position }}</td>
                                 <td>{{ vote.candidate.name }}</td>
                                 <td>{{ vote.voter.f_name }}</td>
                             </tr>
                             {% endfor %}
-                           
+
                         </table>
 
                     </div>
                 </div>
             </div>
-            <div class="container ">
+          
+            <div class="container">
                 <div class="row mb-3">
-                    <div class="col-6 mt-3">
-                    
-                        showing 1 to 2 of2 entries
-                    
+                    <div class="col-6 mt-3" style="font-size: medium;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                        Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
                     </div>
                     <div class="col-6">
-                        <div class="next_prev ">
-                            <div>
-                                <a href="#">&#8592; Previous</a>
-                                <a href="#">Next &rarr;</a>
-                            </div>
+                        <div class="next_prev">
+                            {% if page_obj.has_previous %}
+                            <a class="pagination-link" href="?page=1">&#171; First</a>
+                            <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <span class="current_page pagination-link">{{ num }}</span>
+                            {% else %}
+                            <a class="pagination-link" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            <a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}">Last &#187;</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
- 
- $(document).ready(function() {
-    $('#search-input').on('input', function() {
-        var searchInput = $(this).val();
-        const titleId = $('#title_id').val();
-        
-        console.log("Search query:", searchInput); 
-        
-        
-        $.ajax({
-            type: 'GET',
-            url:  "{% url 'school_admin:search_votes'  %}?id = "+ titleId,
-            data: {
-                search: searchInput,
-            id: titleId
-            },
-            success: function(data) {
-                console.log("Search results:", data); 
-                
-                $('.data_table tr:not(:first-child)').remove();
-                
-                if (data.length === 0) {
-                    var noResultsRow = '<tr>' +
-                        '<td colspan="3">No results found</td>' +
-                        '</tr>';
-                    
-                    $('.data_table').append(noResultsRow);
-                } else {
-                    $.each(data, function(index, result) {
-                        var row = '<tr>' +
-                            '<td>' + result.position + '</td>' +
-                            '<td>' + result.candidate + '</td>' +
-                            '<td>' + result.voter + '</td>' +
-                            '</tr>';
-                        
-                        $('.data_table').append(row);
-                    });
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("AJAX error:", error); 
+
+    function reset(){
+        location.reload();
+    }
+
+    $(document).ready(function () {
+        $('#search-input').on('input', function () {
+            var searchInput = $(this).val();
+            const titleId = $('#title_id').val();
+            if (searchInput == "") {
+                location.reload();
             }
+            
+
+            console.log("Search query:", searchInput);
+            
+
+
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'school_admin:search_votes'  %}?id = " + titleId,
+                data: {
+                    search: searchInput,
+                    id: titleId
+                },
+                success: function (data) {
+                    console.log("Search results:", data);
+
+                    $('.data_table tr:not(:first-child)').remove();
+
+                    if (data.length === 0) {
+                        var noResultsRow = '<tr>' +
+                            '<td colspan="3">No results found</td>' +
+                            '</tr>';
+
+                        $('.data_table').append(noResultsRow);
+                    } else {
+                        $.each(data, function (index, result) {
+                            var row = '<tr>' +
+                                '<td>' + result.position + '</td>' +
+                                '<td>' + result.candidate + '</td>' +
+                                '<td>' + result.voter + '</td>' +
+                                '</tr>';
+
+                            $('.data_table').append(row);
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("AJAX error:", error);
+                }
+            });
         });
     });
-});
+
+
+
+ 
 </script>
 
 {% endblock %}
-
-
-

@@ -25,6 +25,7 @@ class Title(models.Model):
     title = models.CharField(max_length=500)
     date = models.DateField(default=default_date)
     status = models.CharField(max_length=50,default='non-active')
+    result = models.CharField(max_length=50,default='not-published')
 
     class Meta :
         db_table = 'title_tb'

@@ -10,6 +10,8 @@ from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
 from django.db.models import Count, F, Max
+from django.core.paginator import Paginator
+
 
 
 import random
@@ -23,29 +25,6 @@ def master(request):
     return render(request,'school_admin/master.html')
 
 
-# def result(request):
-#     positions = Positions.objects.filter(title_id=2)
-
-#     results1=[]
-#     results = []
-#     result_array=[]
-#     for position in positions:
-#         candidates = Candidates.objects.filter(position_id=position.id)
-#         candidate_results = Votes.objects.filter(position_id=position.id).values('candidate').annotate(vote_count=Count('candidate')).order_by('-vote_count')
-        
-
-        
-#         for candidate_result in candidate_results:
-#             candidate = Candidates.objects.get(pk=candidate_result['candidate'])
-#             vote_count = candidate_result['vote_count']
-#             result_array.append({'candidate': candidate, 'vote_count': vote_count})
-
-
-
-#         winner = candidate_results.first() if candidate_results else None
-#         results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
-    
-#     return render(request, 'school_admin/result.html', {'results': results})
 
 def result(request):
     # Retrieve all positions for the election
@@ -63,9 +42,11 @@ def result(request):
             .order_by('-vote_count')
         )
 
-        winner = candidate_results.first() if candidate_results else None
-        print(winner)
-        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
+        max_vote_count = candidate_results.first()['vote_count'] if candidate_results else 0
+        
+        # Get all candidates with the maximum vote count as winners
+        winners = [candidate for candidate in candidate_results if candidate['vote_count'] == max_vote_count]
+        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winners': winners})
         # print(results)
 
 
@@ -95,6 +76,11 @@ def home(request):
 
 def voters(request):
     titles = Title.objects.get(status='active')
+    all_votes = Voter.objects.filter(title_id=titles.id)
+    paginator = Paginator(all_votes, 4)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     msg = ''
     voters = Voter.objects.filter(title_id=titles.id)
@@ -135,7 +121,7 @@ def voters(request):
 
     
 
-    return render(request,'school_admin/voters.html',{"msg":msg,"voters":voters,"titles":titles})
+    return render(request,'school_admin/voters.html',{"msg":msg,"voters":voters,"titles":titles,"page_obj":page_obj})
 
 
 
@@ -145,6 +131,11 @@ def positions(request):
 
     titles = Title.objects.get(status='active')
     positions = Positions.objects.filter(title_id=titles.id)
+    all_votes = Positions.objects.filter(title_id=titles.id)
+    paginator = Paginator(all_votes, 5)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
 
 
@@ -169,7 +160,7 @@ def positions(request):
             msg = 'already exist'
             
 
-    return render(request,'school_admin/positions.html',{"msg":msg,"titles":titles,"positions":positions})
+    return render(request,'school_admin/positions.html',{"msg":msg,"titles":titles,"positions":positions,"page_obj":page_obj})
 
 
 
@@ -196,6 +187,11 @@ def validate_position(request):
 
 def title(request):
     title = Title.objects.all()
+    all_votes = Title.objects.all()
+    paginator = Paginator(all_votes, 5)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     msg = ''
     
     if request.method == 'POST':
@@ -218,7 +214,7 @@ def title(request):
 
         else :
             msg = 'election already  exist '
-    return render(request,'school_admin/title.html',{"titles":title,"msg":msg})
+    return render(request,'school_admin/title.html',{"titles":title,"msg":msg,"page_obj":page_obj})
 
 
 
@@ -228,6 +224,11 @@ def title(request):
 def candidates(request):
     titles = Title.objects.get(status='active')
     candidatess = Candidates.objects.filter(title_id=titles.id)
+    all_votes = Candidates.objects.filter(title_id=titles.id)
+    paginator = Paginator(all_votes, 5)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
 
     msg = ''
@@ -270,7 +271,7 @@ def candidates(request):
         else :
             msg = 'already existed mail'
 
-    return render(request,'school_admin/candidates.html',{"titles":titles,"msg":msg,"candidates":candidatess})
+    return render(request,'school_admin/candidates.html',{"titles":titles,"msg":msg,"candidates":candidatess,"page_obj":page_obj})
 
 
 
@@ -307,7 +308,13 @@ def votes(request):
     votess = Title.objects.get(status='active')
     votess_id = Votes.objects.filter(title_id=votess.id)
 
-    return render(request,'school_admin/votes.html',{"votes":votess_id,'id':votess})
+    all_votes = Votes.objects.filter(title_id=votess.id)
+    paginator = Paginator(all_votes, 6)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request,'school_admin/votes.html',{"votes":votess_id,'id':votess,'page_obj': page_obj})
 
 
 
@@ -541,26 +548,6 @@ def search_candidates(request):
 
 
 
-# def search_voters(request):
-#     search_query = request.GET.get('search')
-#     title_id = request.GET.get('id')
-#     voters = Voter.objects.filter(f_name__icontains=search_query ,title_id=title_id)
-    
-#     results = []
-
-#     for voter in voters:
-#         result = {
-#             'f_name': voter.f_name,
-#             'l_name': voter.l_name,
-#             'photo_url': voter.photo.url,
-#             'password': voter.password,
-#             'id': voter.id
-#             # Add other fields as needed
-#         }
-#         results.append(result)
-
-#     return JsonResponse(results, safe=False)
-
 
 
 
@@ -603,15 +590,22 @@ def update_status(request):
 
 
 
-def election_results(request):
-    positions = Positions.objects.filter(title_id=2)
+
+
+def toggle_result(request, title_id):
+    title = Title.objects.get(pk=title_id)
+    if request.method == 'POST':
+        if title.result == 'published':
+            title.result = 'not-published'
+        else:
+            title.result = 'published'
+        title.save()
+
+        return JsonResponse({'result': title.result})
+    
+
 
     
-    results = []
-    for position in positions:
-        candidates = Candidates.objects.filter(position_id=position.id)
-        candidate_results = Votes.objects.filter(position_id=position.id).values('candidate').annotate(vote_count=Count('candidate')).order_by('-vote_count')
-        winner = candidate_results.first() if candidate_results else None
-        results.append({'position': position, 'candidates': candidates, 'candidate_results': candidate_results, 'winner': winner})
-    print(results,'lll')
-    return render(request, 'school_admin/result.html', {'results': results})
+
+
+    

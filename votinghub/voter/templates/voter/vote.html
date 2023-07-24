@@ -6,6 +6,13 @@
 {% block header %}
     <link rel="stylesheet" href="{% static 'css/vote.css' %}">
     <style>
+        .err_msg {
+            height: 50px;
+            background-color: rgb(158, 21, 21);
+            font-size: large;
+            color: white;
+            margin-bottom: 10px;
+        }
     </style>
 {% endblock %}
 
@@ -20,6 +27,19 @@
 
     <div class="container vote">
         <div class="row ">
+            {% if messages %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col err_msg">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <div class="col bg-light ">
                 <form method="POST" id="voting-form">
                     {% csrf_token %}
@@ -41,7 +61,7 @@
                                         <div class="row">
                                             <div class="col-2">
                                                 <input class="form-check-input me-1 radios" type="radio"
-                                                       name="{{ position.position }}" value="{{ candidate.id }}">
+                                                       name="{{ position.position|slugify }}" value="{{ candidate.id }}">
                                                 <label class="form-check-label" for="firstRadio">
                                                     <!-- Button trigger modal -->
                                                 </label>
@@ -99,14 +119,13 @@
                     {% endfor %}
                     <div class="div submit text-center mb-3 mt-3">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary view" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal" id="viewBallotBtn" onclick="viewBallot()">
+                        <button type="button" class="btn btn-primary view" id="viewBallotBtn">
                             View Ballot
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -126,6 +145,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
@@ -134,36 +154,11 @@
         <br>
     </div>
 
-    {% if messages %}
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    <script>
+      
 
+    </script>
 {% endblock %}
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"
-        integrity="sha512-..."
-        crossorigin="anonymous"></script>
-
-
-<script>
-  
-    
-</script>
-
-
-
-
 
 
 

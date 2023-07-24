@@ -58,6 +58,57 @@
     box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2); 
     box-sizing: border-box;
 }
+.result-button {
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .result-button.published {
+        background-color: green;
+    }
+
+    .result-button.not-published {
+        background-color: darkblue;
+    }
+    .next_prev {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        color: white;
+    }
+
+    .next_prev a {
+        text-decoration: none;
+        color: white;
+        background-color: gray;
+        border-radius: 2px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .pagination-link {
+        text-decoration: none;
+        color: gray;
+        margin-right: 5px;
+
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        box-sizing: border-box;
+    }
+
+    .current_page {
+        color: black;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        box-sizing: border-box;
+        border-radius: 0;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -121,8 +172,9 @@
                     <th>Name</th>
                     <th>Date</th>
                     <th>Tools</th>
+                    <th>Results</th>
                 </tr>
-                {% for i in titles %}
+                {% for i in page_obj %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ i.title }}</td>
@@ -134,9 +186,43 @@
                               </button>
                         </span>
                     </td>
+                    <td>
+                        <form method="POST" action="{% url 'school_admin:toggle_result' i.id %}" data-title-id="{{ i.id }}">
+                            {% csrf_token %}
+                            <button type="submit" id="button-{{ i.id }}" class="result-button {% if i.result == 'published' %}published{% else %}not-published{% endif %}">
+                                {% if i.result == 'published' %}not-published{% else %}published{% endif %}
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mt-3" style="font-size: medium;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+            </div>
+            <div class="col-6 mb-3">
+                <div class="next_prev">
+                    {% if page_obj.has_previous %}
+                    <a class="pagination-link" href="?page=1">&#171; First</a>
+                    <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="current_page pagination-link">{{ num }}</span>
+                    {% else %}
+                    <a class="pagination-link" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}">Last &#187;</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -180,5 +266,44 @@ $(document).ready(function() {
     });
   });
 });
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+
+        forms.forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const buttonId = 'button-' + this.dataset.titleId;
+                const button = document.getElementById(buttonId);
+
+                if (button) {
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: JSON.stringify({}),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        button.textContent = data.result === 'published' ? 'not-published' : 'published';
+                        button.classList.toggle('published');
+                        button.classList.toggle('not-published');
+                    })
+                    .catch(error => {
+                        console.error('An error occurred:', error);
+                    });
+                } else {
+                    console.error('Button element not found:', buttonId);
+                }
+            });
+        });
+    });
 </script>
 {% endblock %}

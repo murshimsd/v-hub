@@ -40,21 +40,7 @@
         background-color: #f44336;
     }
 
-    .next_prev {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-    }
-
-    .next_prev a {
-        text-decoration: none;
-        color: black;
-        background-color: #008CBA;
-        border-radius: 2px;
-        border: none;
-        padding: 5px 10px;
-        font-size: 14px;
-    }
+    
 
     .title h3 {
         margin-top: 18px;
@@ -126,6 +112,41 @@
         font-weight: bold;
         height: 50px;
         width: 100%;
+    }
+    .next_prev {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        color: white;
+    }
+
+    .next_prev a {
+        text-decoration: none;
+        color: white;
+        background-color: gray;
+        border-radius: 2px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .pagination-link {
+        text-decoration: none;
+        color: gray;
+        margin-right: 5px;
+
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        box-sizing: border-box;
+    }
+
+    .current_page {
+        color: black;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(26, 8, 8, 0.2);
+        box-sizing: border-box;
+        border-radius: 0;
     }
 </style>
 {% endblock %}
@@ -300,7 +321,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-6 float-sm-start float-md-start">
-                        show entries
+                        
                     </div>
                     <div class="col-6">
                         <form class="example search " action="">
@@ -330,7 +351,7 @@
                                 <th>E-mail</th>
                                 <th>Tools</th>
                             </tr>
-                            {% for candidate in candidates %}
+                            {% for candidate in page_obj %}
                             <tr>
                                 <td>{{ candidate.name }}</td>
                                 <td><img src="{{ candidate.photo.url }}" alt="" style="height: 50px; width: 50px;"></td>
@@ -454,17 +475,31 @@
 
 
             </div>
-            <div class="container text-center">
-
-                <div class="col-12">
-                    <div class="next_prev mb-3">
-                        <div>
-                            <a href="#">&#8592; Previous</a>
-                            <a href="#">Next &rarr;</a>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 mt-3" style="font-size: medium;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                        Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="next_prev">
+                            {% if page_obj.has_previous %}
+                            <a class="pagination-link" href="?page=1">&#171; First</a>
+                            <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <span class="current_page pagination-link">{{ num }}</span>
+                            {% else %}
+                            <a class="pagination-link" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            <a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}">Last &#187;</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>
