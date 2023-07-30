@@ -3,9 +3,40 @@
 {% block title %} home {% endblock %}
 
 {% block header %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 <style>
     /* Card Styles */
-    .card {
+
+    #exampleModal {
+  border-radius: 0; /* To make it full square */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adding a box shadow */
+}
+
+
+.modal-content {
+  border-radius: 0; 
+  padding: 20px; 
+  text-transform: capitalize;
+}
+.modal-content  button{
+  border-radius: 0; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+}
+
+.modal-header {
+  border-bottom: none; 
+}
+
+
+.modal-title {
+  font-style: italic; 
+}
+.modal-footer  button{
+    border-radius: 0; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+}
+
+    .cards {
         width: 300px;
         height: 400px;
         background-color: #d6dce3;
@@ -21,7 +52,8 @@
         box-sizing: border-box;
     }
 
-    .card:hover {
+
+    .cards:hover {
         transform: scale(1.02);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
@@ -37,7 +69,7 @@
         color: #666666;
     }
 
-    button {
+    .cards button {
         background-color: #4CAF50;
         color: white;
         border: none;
@@ -49,15 +81,28 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    button:hover {
+    .cards button:hover {
         background-color: #45a049;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
-    button:active {
+    .cards button:active {
         background-color: #3e874d;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
+    #exampleModal{
+        transform: scale(105%);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+    box-sizing: border-box;
+}
+.photo{
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    
+}
+
 </style>
 {% endblock %}
 
@@ -65,14 +110,75 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-            <div class="card">
+            <div class="cards">
                 <h1>Welcome</h1>
-                <p>Dear Murshid,</p>
+                <p>Dear {{ candidate.name }},</p>
                 <p>Thank you for joining as a<br><b style="margin-left: 35px;">candidate!</b></p>
-                <a href="{% url 'candidate:profile' %}"><button>Visit Your Candidate Profile</button></a>
+                
+
+                <!-- Vertically centered modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    View Your Candidate Profile
+                </button>
+
+
+
+
             </div>
         </div>
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Candidate Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ candidate.photo.url }}" alt="" class="photo">
+                <h2>{{ candidate.name }}</h2>
+                <p>Email: {{ candidate.email }}</p>
+                <p>Election: {{ candidate.title.title }}</p>
+                <p>position: {{ candidate.position.position }}</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                    Edit Platform
+                </button>
+
+
+            </div>
+            <div class="modal-footer">
+                <!-- Modal footer buttons, if needed -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hello Friends...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <textarea class="form-control" style="border: none;" rows="5" name="platform" id="platformTextArea">{{ candidate.platform }}</textarea>
+                    <button type="submit" class="btn btn-primary mt-3" >Save Changes</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- Modal footer buttons, if needed -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
 {% endblock %}

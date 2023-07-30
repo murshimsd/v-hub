@@ -72,13 +72,13 @@
 {% block content %}
 <div class="profile-card" style="margin-top: 10px;">
     <div class="profile-image">
-      <img src="{% static 'images/prof.jpg' %}" alt="Profile Image">
+      <img src="{{ candidate.photo.url }}" alt="Profile Image">
     </div>
     <div class="profile-details">
-      <h2>Name</h2>
-      <p>Email: example@example.com</p>
-      <p>Election: university Election</p>
-      <p>position: 123, Chairman</p>
+      <h2>{{ candidate.name }}</h2>
+      <p>Email: {{ candidate.email }}</p>
+      <p>Election: {{ candidate.title.title }}</p>
+      <p>position: {{ candidate.position.position }}</p>
       <button type="button " class="btn edit-button" data-bs-toggle="modal"
 data-bs-target="#exampleModal2">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -101,7 +101,11 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            {{ candidate.platform}}
+
+          <textarea name="" id="" cols="30" rows="10">
+            {{ candidate.platform }}
+          </textarea>
+            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary"

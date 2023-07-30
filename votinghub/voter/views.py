@@ -6,9 +6,11 @@ from django.contrib import messages
 from school_admin.models import Positions , Title
 from candidate.models import Candidates , Votes
 from django.db.models import Count
+import json
 
 
 def vote(request):
+   
     titles=Title.objects.get(status='active')
     title_ids = Title.objects.get(id=titles.id)
     voter = Voter.objects.get(id=request.session.get('voter'))
@@ -49,8 +51,18 @@ def vote(request):
     for position in positions:
         candidates = Candidates.objects.filter(position=position, title_id=voter.title_id)
         position_candidates[position] = candidates
+    
 
-    return render(request, 'voter/vote.html', {"position_candidates": position_candidates})
+
+    position_candidates1 = {}
+    for position in positions:
+        candidates = Candidates.objects.filter(position=position, title_id=voter.title_id)
+        position_candidates1[position.position] = [{'id': candidate.id, 'name': candidate.name} for candidate in candidates]
+
+    print("*********",position_candidates)
+    position_candidates_json = json.dumps(position_candidates1)
+
+    return render(request, 'voter/vote.html', {"position_candidates": position_candidates,"position_candidates_json": position_candidates_json})
 
 
 

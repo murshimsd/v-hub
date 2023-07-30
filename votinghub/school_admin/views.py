@@ -69,7 +69,8 @@ def home(request):
     voters_count = Voter.objects.filter(title_id=titles.id).count()
     candidates_count = Candidates.objects.filter(title_id=titles.id).count()
     positions_count = Positions.objects.filter(title_id=titles.id).count()
-    return render(request,'school_admin/home.html',{"voters_count":voters_count,"candidates_count":candidates_count,"positions_count":positions_count})
+    num_voters_voted = Votes.objects.filter(title_id=titles.id).values('voter_id').annotate(num_votes=Count('voter_id')).count()
+    return render(request,'school_admin/home.html',{"voters_count":voters_count,"candidates_count":candidates_count,"positions_count":positions_count,"voted_count":num_voters_voted})
 
 
 

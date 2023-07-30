@@ -4,174 +4,275 @@
 {% block title %}voter{% endblock %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static 'css/vote.css' %}">
-    <style>
-        .err_msg {
-            height: 50px;
-            background-color: rgb(158, 21, 21);
-            font-size: large;
-            color: white;
-            margin-bottom: 10px;
-        }
-    </style>
+<link rel="stylesheet" href="{% static 'css/vote.css' %}">
+<style>
+    body{
+        text-transform: capitalize;
+    }
+     input[type="radio"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #28a745;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+    }
+
+  
+    input[type="radio"]:not(:checked) {
+        background-color: transparent;
+        border: 2px solid #28a745;
+    }
+
+    input[type="radio"]:checked {
+        background-color: transparent;
+        border: 2px solid #28a745;
+    }
+
+  
+    input[type="radio"]:checked::before {
+        content: "\2713"; 
+        display: block;
+        text-align: center;
+        line-height: 20px; 
+        color: #28a745;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .err_msg {
+        height: 50px;
+        background-color: rgb(158, 21, 21);
+        font-size: large;
+        color: white;
+        margin-bottom: 10px;
+    }
+    #ballotList {
+    margin: 10px;
+    border-radius: 0;
+}
+
+
+#ballotList thead {
+    background-color: #f8f9fa;
+}
+
+
+#ballotList th {
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+
+#ballotList td {
+    text-align: center;
+    padding: 10px;
+}
+
+
+#ballotList tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+#ballotList tbody tr:hover {
+    background-color: #e2e2e2;
+}
+</style>
 {% endblock %}
 
 {% block content %}
-    <div class="container mb-3">
-        <div class="row election">
-            <div class="col">
-                <h1>calicut university election - 2022</h1>
-            </div>
+<div class="container mb-3">
+    <div class="row election">
+        <div class="col">
+            <h1>calicut university election - 2022</h1>
         </div>
     </div>
+</div>
 
-    <div class="container vote">
-        <div class="row ">
-            {% if messages %}
-                <div class="container">
-                    <div class="row">
-                        <div class="col err_msg">
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        </div>
+<div class="container vote">
+    <div class="row ">
+        {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="col err_msg">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
                     </div>
+                    {% endfor %}
                 </div>
-            {% endif %}
-            <div class="col bg-light ">
-                <form method="POST" id="voting-form">
-                    {% csrf_token %}
-                    {% for position, candidates in position_candidates.items %}
-                        <ul class="list-group vote_form">
-                            <li class="list-group  position">
-                                <div class="row">
-                                    <div class="col-10 mt-3 mb-3">
-                                        <h2>{{ position.position }}</h2>
-                                    </div>
-                                    <div class="col-2">
-                                        <input class="btn reset mb-3 mt-3 resets" type="reset" value="Reset">
-                                    </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col bg-light ">
+            <form method="POST" id="voting-form">
+                {% csrf_token %}
+                {% for position, candidates in position_candidates.items %}
+                <ul class="list-group vote_form">
+                    <li class="list-group  position">
+                        <div class="row">
+                            <div class="col-10 mt-3 mb-3">
+                                <h2>{{ position.position }}</h2>
+                            </div>
+                            <div class="col-2">
+                                <input class="btn reset mb-3 mt-3 resets" type="reset" value="Reset">
+                            </div>
+                        </div>
+                    </li>
+                    {% for candidate in candidates %}
+                    <li class="list-group-item">
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label class="custom-radio-btn">
+                                        <input class="form-check-input me-1 radios" type="radio"
+                                            name="{{ position.position|slugify }}" value="{{ candidate.id }}">
+                                        
+                                    </label>
                                 </div>
-                            </li>
-                            {% for candidate in candidates %}
-                                <li class="list-group-item">
-                                    <div class="container text-center">
-                                        <div class="row">
-                                            <div class="col-2">
-                                                <input class="form-check-input me-1 radios" type="radio"
-                                                       name="{{ position.position|slugify }}" value="{{ candidate.id }}">
-                                                <label class="form-check-label" for="firstRadio">
-                                                    <!-- Button trigger modal -->
-                                                </label>
-                                            </div>
-                                            <div class="col-2">
-                                                <button type="button" class="btn platform" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal-{{ candidate.id }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-search"
-                                                         viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                                    </svg>
-                                                    platform
-                                                </button>
+                                <div class="col-2">
+                                    <button type="button" class="btn platform" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal-{{ candidate.id }}" data-candidate-id="{{ candidate.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg>
+                                        platform
+                                    </button>
 
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal-{{ candidate.id }}"
-                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
-                                                     aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5"
-                                                                    id="exampleModalLabel">Candidate Platform</h1>
-                                                                <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                {{ candidate.platform }}
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                            </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal-{{ candidate.id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hello Friends...</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        
+                                                        <div class="col-9">
+                                                           
+                                                            <p id="candidatePlatform">{{ candidate.platform }}</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <img src="{{ candidate.photo.url }}" alt="" class="image">
-                                            </div>
-                                            <div class="col-5 name">
-                                                <h3>
-                                                    {{ candidate.name }}
-                                                </h3>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <br><br>
-                    {% endfor %}
-                    <div class="div submit text-center mb-3 mt-3">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary view" id="viewBallotBtn">
-                            View Ballot
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Your Selections</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div id="modalSelections">
-                                            <!-- Selected choices will be displayed here -->
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <img src="{{ candidate.photo.url }}" alt="" class="image">
+                                </div>
+                                <div class="col-5 name">
+                                    <h3>
+                                        {{ candidate.name }}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <br><br>
+                {% endfor %}
+                <div class="div submit text-center mb-3 mt-3">
+                    <!-- Button trigger modal -->
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ballotModal" id="viewBallotBtn">
+    view -ballot
+  </button>
+  
+  <div class="modal fade" id="ballotModal" tabindex="-1" aria-labelledby="ballotModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ballotModalLabel">Your-ballot</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Ballot positions and voted candidates will be dynamically inserted here as a table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="ballotList">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Candidate Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- The table content will be dynamically added using JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
-        <br>
     </div>
+</div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   
+   var positionCandidates = JSON.parse('{{ position_candidates_json|escapejs }}');
 
-    <script>
-      
 
-    </script>
+
+
+
+
+   $(document).ready(function () {
+    $("#viewBallotBtn").click(function () {
+        // Clear previous content in the modal
+        $("#ballotList tbody").empty();
+
+        // Iterate over all positions and candidates
+        for (const position in positionCandidates) {
+            // Check if the candidate is selected for this position
+            var selectedCandidateId = $("input[name='" + position + "']:checked").val();
+            var candidateName = "Selected no one";
+
+            if (selectedCandidateId) {
+                // Get the candidate object
+                var candidate = positionCandidates[position].find(candidate => candidate.id == selectedCandidateId);
+                candidateName = candidate.name;
+            }
+
+            // Create a new row for each position and candidate
+            var positionRow = $("<tr></tr>");
+            positionRow.append($("<td></td>").text(position));
+            positionRow.append($("<td></td>").text(candidateName));
+
+            // Append the row to the table's body
+            $("#ballotList tbody").append(positionRow);
+        }
+
+        // Show the modal
+        $("#ballotModal").modal("show");
+    });
+});
+</script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

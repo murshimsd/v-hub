@@ -85,13 +85,12 @@ def voter_register(request):
     return render(request,'common/voter_register.html')   
 
 def home(request):
+    
     return render(request,'common/home.html') 
 
 def master(request):
     return render(request,'common/master.html')    
-
-def candidate_login(request):
-    return render(request,'common/candidate_login.html')  
+ 
 
 def about(request):
     return render(request,'common/about.html')  
